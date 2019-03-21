@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+<!--launch gmapping version of slam from ros-->
+   <node pkg="gmapping" type="slam_gmapping" name="gmapping">
+       <param name="base_frame" value="base_link"/>
+       <param name="odom_frame" value="vesc/odom" />
+       <param name="delta" value="0.1" />
+   </node>
+</launch>

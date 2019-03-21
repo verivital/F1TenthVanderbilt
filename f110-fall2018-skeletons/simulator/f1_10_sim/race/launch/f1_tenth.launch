@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+<!--   <include file="$(find racecar_gazebo)/launch/racecar_tunnel.launch"/> -->
+  <include file="$(find racecar_gazebo)/launch/racecar.launch">
+    <arg name="world_name" value="track_barca"/>
+  </include>
+
+  <!--<node pkg="race" name="control_node" type="control.py" output="screen"/>-->
+  <node pkg="race" name="sim_connector_node" type="sim_connector.py"/>
+  <node pkg="race" name="keyboard_node" type="keyboard.py" output="screen"/>
+  <!--<node pkg="race" name="levine_demo_node" type="levineDemo.py"/>-->
+
+  <node pkg="rviz" type="rviz" name="rviz" output="screen"/>
+</launch>
