@@ -3,7 +3,8 @@
 <!--launch gmapping version of slam from ros-->
    <node pkg="gmapping" type="slam_gmapping" name="gmapping">
        <param name="base_frame" value="base_link"/>
-       <param name="odom_frame" value="vesc/odom" />
+       <param name="odom_frame" value="/vesc/odom" />
        <param name="delta" value="0.1" />
    </node>
+   <node pkg="tf" type="static_transform_publisher" name="base_link_laser_broadcaster" args="0.265 0 0.125 0 0 0 base_link laser 100"/>
 </launch>
