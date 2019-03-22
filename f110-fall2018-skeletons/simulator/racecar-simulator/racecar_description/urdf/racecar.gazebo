@@ -47,6 +47,8 @@
   <material>Gazebo/Black</material>
 </gazebo>
 
+
+
 <!-- Gazebo plugins -->
 
 <gazebo>
@@ -55,6 +57,18 @@
     <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
   </plugin>
 </gazebo>
+
+<!--imu reference-->
+<gazebo>
+ <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+ <alwaysOn>true</alwaysOn>
+ <bodyName>imu_link</bodyName>
+ <topicName>imu</topicName>
+ <serviceName>imu_service</serviceName>
+ <gaussianNoise>0.0</gaussianNoise>
+ <updateRate>20.0</updateRate>
+ </plugin>
+ </gazebo>
 
   <!-- hokuyo -->
 <xacro:unless value="$(optenv DISABLE_GAZEBO_LASER false)">

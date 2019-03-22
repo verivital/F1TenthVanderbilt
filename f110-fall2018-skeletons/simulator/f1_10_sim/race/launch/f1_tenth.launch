@@ -9,6 +9,4 @@
   <node pkg="race" name="sim_connector_node" type="sim_connector.py"/>
   <node pkg="race" name="keyboard_node" type="keyboard.py" output="screen"/>
   <!--<node pkg="race" name="levine_demo_node" type="levineDemo.py"/>-->
-
-  <node pkg="rviz" type="rviz" name="rviz" output="screen"/>
 </launch>
