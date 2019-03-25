@@ -1,5 +1,13 @@
 # The FLASH Van 
-The team name stands for Fully Autonomous but Stuff Happens and we are from **Van**derbilt 
+The team name stands for **F**u**l**ly **A**utonomous but **S**tuff **H**appens and we are from **Van**derbilt.
+Team members are:
+* Feiyang Cai
+* Tim Durrah
+* Nathaniel (Nate) Hamilton
+* Diego Manzanas-Lopez
+* Patrick Musau         (Project Leader)
+* Shreyas Ramakrishna
+* Ayana Wild
 
 # Vehicle Configuration
 Our car is modeled after the V2 using a Hokuyo UST-10LX lidar and ZED Camera for sensing and localization, with a NVIDIA TX2 for processing.
