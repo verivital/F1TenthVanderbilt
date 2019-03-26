@@ -2,9 +2,9 @@
 The team name stands for **F**u**l**ly **A**utonomous but **S**tuff **H**appens and we are from **Van**derbilt.
 Team members are:
 * Feiyang Cai
-* Tim Durrah
+* Tim Darrah
 * Nathaniel (Nate) Hamilton
-* Diego Manzanas-Lopez
+* Diego Manzanas Lopez
 * Patrick Musau         (Project Leader)
 * Shreyas Ramakrishna
 * Ayana Wild
