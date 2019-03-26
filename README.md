@@ -4,7 +4,7 @@ Team members are:
 * Feiyang Cai
 * Tim Durrah
 * Nathaniel (Nate) Hamilton
-* Diego Manzanas-Lopez
+* Diego Manzanas Lopez
 * Patrick Musau         (Project Leader)
 * Shreyas Ramakrishna
 * Ayana Wild
