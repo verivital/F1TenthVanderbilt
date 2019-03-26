@@ -72,19 +72,19 @@ def control(data):
 	# # 	velocity = 0.3
 
 	if angle >= 10*np.pi/180 or angle <= -10*np.pi/180:
-		velocity = 0.2
+		velocity = 0.4
 
 	if angle > 20*np.pi/180 or angle < -20*np.pi/180:
-		velocity = 0.2
+		velocity = 0.4
 
 	if angle >= -1*np.pi/180 and angle <= 1*np.pi/180:
-		velocity = 0.2
+		velocity = 0.4
 
 	if velocity < 0:
 		velocity = 1
 
-	if velocity > 0.2:
-		velocity = 0.2
+	if velocity > 0.4:
+		velocity = 0.4
 
 
 

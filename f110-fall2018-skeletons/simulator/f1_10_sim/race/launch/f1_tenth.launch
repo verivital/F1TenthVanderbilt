@@ -8,5 +8,6 @@
   <!--<node pkg="race" name="control_node" type="control.py" output="screen"/>-->
   <node pkg="race" name="sim_connector_node" type="sim_connector.py"/>
   <node pkg="race" name="keyboard_node" type="keyboard.py" output="screen"/>
+  <include file="$(find race)/launch/laser_scan_matcher.launch"/>
   <!--<node pkg="race" name="levine_demo_node" type="levineDemo.py"/>-->
 </launch>

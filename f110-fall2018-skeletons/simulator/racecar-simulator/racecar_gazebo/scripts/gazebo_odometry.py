@@ -69,7 +69,7 @@ class OdometryNode:
                 rotation=cmd.pose.pose.orientation
             )
         )
-        self.tf_pub.sendTransform(tf)
+        #self.tf_pub.sendTransform(tf)
 
 # Start the node
 if __name__ == '__main__':

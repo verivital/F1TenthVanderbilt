@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>    
+    <!--    Map    server    -->    
+    <!--alread done in wall-following launch<arg    name="map_file"    default="$(find    race)/maps/mymap2.yaml"/>    
+    <node    name="map_server"    pkg="map_server"    type="map_server"    args="$(arg    map_file)"    />-->        
+    <include    file="$(find    race)/launch/f1amcl.launch"/>        
+</launch>

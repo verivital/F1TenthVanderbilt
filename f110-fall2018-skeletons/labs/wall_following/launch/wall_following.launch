@@ -5,9 +5,13 @@
   </include>
 
   # output="screen" allows us to see print statements
-  <node pkg="wall_following" name="pid_error_node" type="pid_error.py" output="screen"/> 
+  <!--<node pkg="wall_following" name="pid_error_node" type="pid_error.py" output="screen"/>-->
   <node pkg="wall_following" name="key_board_teleop" type="keyboard.py" output="screen"/> 
   <!--<node pkg="wall_following" name="control_node" type="control.py" output="screen"/>-->
   <node pkg="wall_following" name="sim_connector_node" type="sim_connector.py" output="screen"/>
+  <include file="$(find race)/launch/laser_scan_matcher.launch"/>
+  <arg    name="map_file"    default="$(find    race)/maps/mymap2.yaml"/>    
+  <node    name="map_server"    pkg="map_server"    type="map_server"    args="$(arg    map_file)"    />  
+  <node    name="message_to_tf"    pkg="wall_following"    type="message_to_tf.py"/>  
 
 </launch>
