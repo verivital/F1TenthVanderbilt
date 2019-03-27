@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+
+
+"""This script creates an odometric frame so that amcl can use it"""
 import rospy 
 import tf
 import math
@@ -31,12 +34,25 @@ def vesc_odom_callback(data):
     odom_trans.header.frame_id="odom"
     odom_trans.child_frame_id="base_link"
 
+    #Odometry is the distance of something relative to a point. In our case it is the distance between the base link
+    #and the fixed frame odom. Here we attach the odom frame to the map so the transform between odom and base_link 
+    #is the same transform as map to base_link
+    #This information is given by gazebo so I publish the position and orientation by subscribing to the /vesc/odom topio
+    #the transforms are given by position and orientation. To understand this in more detail look at gazeboOdometry.py
     odom_trans.transform.translation.x=pose.position.x
     odom_trans.transform.translation.y=pose.position.y
     odom_trans.transform.translation.z=pose.position.z
-    odom_trans.transform.rotation=pose.orientation
+    odom_trans.transform.rotation=pose.orientation#Quaternion(*tf.transformations.quaternion_from_euler(0,0,0))
     br.sendTransformMessage(odom_trans)
 
+    #Here I want to publish the transform between the odom frame and the map since we fix the odom frame to the map 
+    #frame all the transforms are 0
+    pose2=data.pose.pose.position
+    #("pose"+str(pose2))
+    pose2.x=0
+    pose2.y=0
+    pose2.z=0
+    print("pose: "+str(pose2))
     tf1 = TransformStamped(
             header=Header(
                 frame_id="map",
@@ -44,8 +60,8 @@ def vesc_odom_callback(data):
             ),
             child_frame_id="odom",
             transform=Transform(
-                translation=pose.position,
-                rotation=pose.orientation
+                translation=pose2,
+                rotation=Quaternion(*tf.transformations.quaternion_from_euler(0,0,0))
             )
         )
     br2.sendTransform(tf1)

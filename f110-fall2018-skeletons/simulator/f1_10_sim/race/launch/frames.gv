@@ -1,0 +1,4 @@
+digraph G {
+"base_link" -> "base_footprint"[label="Broadcaster: /play_1553715429169837395\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 \nBuffer length: 0.000 sec\n"];
+"odom" -> "base_link"[label="Broadcaster: /play_1553715429169837395\nAverage rate: 50.166 Hz\nMost recent transform: 1553712237.108 \nBuffer length: 4.983 sec\n"];
+}

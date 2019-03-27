@@ -14,4 +14,7 @@
   <node    name="map_server"    pkg="map_server"    type="map_server"    args="$(arg    map_file)"    />  
   <node    name="message_to_tf"    pkg="wall_following"    type="message_to_tf.py"/>  
 
+  <include file="$(find race)/launch/amcl.launch"/>
+<!--<include file="$(find particle_filter)/launch/localize.launch"/>-->
+
 </launch>

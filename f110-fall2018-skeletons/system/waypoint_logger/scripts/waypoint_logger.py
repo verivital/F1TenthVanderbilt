@@ -10,7 +10,7 @@ from tf.transformations import euler_from_quaternion
 from nav_msgs.msg import Odometry
 
 home = expanduser('~')
-file = open(strftime(home+'/rcws/logs/wp-%Y-%m-%d-%H-%M-%S',gmtime())+'.csv', 'w')
+file = open(strftime(home+'/Documents/catkin_ws/src/f110-fall2018-skeletons/labs/wall_following/logs/wp-%Y-%m-%d-%H-%M-%S',gmtime())+'.csv', 'w')
 
 def save_waypoint(data):
     quaternion = np.array([data.pose.pose.orientation.x, 
