@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>    
+    <!--    Map    server    -->    
+    <!--alread done in wall-following launch<arg    name="map_file"    default="$(find    race)/maps/mymap2.yaml"/>    
+    <node    name="map_server"    pkg="map_server"    type="map_server"    args="$(arg    map_file)"    />-->
+    <node pkg="rosbag" type="play" name="player" output="screen" args="--clock /home/musaup/Documents/catkin_ws/src/f110-fall2018-skeletons/simulator/f1_10_sim/race/launch/March29_3.bag"/>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_laser" args="0.285 0.0 0.127 0.0 0.0 0.0 1.0 /base_link /laser"/>
+    <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 map odom 100"/>
+    <!--<node pkg="race" type="base_link_to_laser_bag.py" name="base_link_to_laser" output="screen"/>-->
+    <!--<node pkg="tf" type="static_transform_publisher" name="base_link_laser_broadcaster" args="0.265 0 0.157 0 0 0 base_link laser 100"/>-->
+    <!--<include    file="$(find    race)/launch/laser_scan_matcher_bag.launch"/>-->  
+    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find race)/launch/bag_rviz.rviz"><param name="use_sim_time" value="true"/></node>
+    <arg name="map_file" default="$(find    race)/maps/bagmap.yaml"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg    map_file)"/>
+    <include file="$(find    race)/launch/f1amcl.launch"/>
+    <!--<include file="$(find hector_mapping)/launch/mapping_bag.launch"/>-->
+    <!--<node pkg="race" type="estimatedBaseLinkMap.py" name="estimatedBaseLinkMap" output="screen"/>-->
+</launch>

@@ -10,9 +10,21 @@ from tf.transformations import euler_from_quaternion
 from nav_msgs.msg import Odometry
 
 home = expanduser('~')
-file = open(strftime(home+'/Documents/catkin_ws/src/f110-fall2018-skeletons/labs/wall_following/logs/wp-%Y-%m-%d-%H-%M-%S',gmtime())+'.csv', 'w')
+file = open(strftime(home+'/Documents/catkin_ws/src/f110-fall2018-skeletons/labs/wall_following/logs/wp-%Y-%m-%d-%H-%M-%S',gmtime())+'.txt', 'w')
 
+
+def checkdistance(arr1,arr2):
+	distarr=abs(arr1-arr2)
+	allsmall=(distarr<0.2)
+	if False in allsmall:
+		return True
+	else:
+		return False
+
+
+point=np.array([1000000,100000,10000,1000000])
 def save_waypoint(data):
+    global point
     quaternion = np.array([data.pose.pose.orientation.x, 
                            data.pose.pose.orientation.y, 
                            data.pose.pose.orientation.z, 
@@ -24,12 +36,12 @@ def save_waypoint(data):
                               data.twist.twist.linear.z]),2)
     if data.twist.twist.linear.x>0.:
         print data.twist.twist.linear.x
-
-    file.write('%f, %f, %f, %f\n' % (data.pose.pose.position.x,
-                                     data.pose.pose.position.y,
-                                     euler[2],
-                                     speed))
-
+    currentPoint=np.array([data.pose.pose.position.x, data.pose.pose.position.y, data.pose.pose.orientation.z, data.pose.pose.orientation.w])
+    if (checkdistance(currentPoint,point)):
+    	file.write('(%f, %f, %f, %f\n),' % (data.pose.pose.position.x,data.pose.pose.position.y, data.pose.pose.orientation.z, data.pose.pose.orientation.w))
+    else:
+	print("Too Close")
+    point=np.array([data.pose.pose.position.x, data.pose.pose.position.y, data.pose.pose.orientation.z, data.pose.pose.orientation.w])
 def shutdown():
     file.close()
     print('Goodbye')

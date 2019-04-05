@@ -1,18 +1,23 @@
 <?xml version="1.0"?>
 <launch>
 <!--launch gmapping version of slam from ros-->
-   <node pkg="gmapping" type="slam_gmapping" name="gmapping">
+   <node pkg="rosbag" type="play" name="player" output="screen" args="--clock /home/musaup/Documents/catkin_ws/src/f110-fall2018-skeletons/simulator/f1_10_sim/race/launch/March29_3.bag"/>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_laser" args="0.285 0.0 0.127 0.0 0.0 0.0 1.0 /base_link /laser"/>
+    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find race)/launch/bag_rviz.rviz"><param name="use_sim_time" value="true"/></node>
+    <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 map odom 100"/>
+    <node pkg="gmapping" type="slam_gmapping" name="gmapping">
        <param name="use_sim_time" value="true"/>
+       <param name="map_frame" value="map"/>
        <param name="base_frame" value="base_link"/>
        <param name="odom_frame" value="odom" />
-       <param name="delta" value="0.04" />
-       <param name="maxUrange" value="10.0" />
-       <param name="linearUpdate" value="0.3" />
-       <param name="angularUpdate" value="0.3"/>
+       <param name="delta" value="0.06" />
+       <param name="maxUrange" value="8.0" />
+       <param name="linearUpdate" value="0.2" />
+       <param name="angularUpdate" value="0.2"/>
        <param name="maxRange" value="10.0" />
        <param name="map_update_interval" value="3.0"/>
        <param name="iterations" value="5"/>
    </node>
-   <node pkg="tf" type="static_transform_publisher" name="base_link_laser_broadcaster" args="0.265 0 0.125 0 0 0 base_link laser 100"/>
+   <!--node pkg="tf" type="static_transform_publisher" name="base_link_laser_broadcaster" args="0.265 0 0.125 0 0 0 base_link laser 100"/>-->
    <!--<node type="rviz" name="rviz" pkg="rviz" args="-d $(find hector_mapping)/launch/visualizationdefault.rviz" />-->
 </launch>

@@ -9,14 +9,14 @@
 
     <!--<remap from="scan" to="$(arg scan_topic)"/>-->
     <!-- OVERALL FILTER PARAMETERS -->
-    <param name="min_particles" value="50ww"/>
+    <param name="min_particles" value="500"/>
     <!-- <param name="max_particles" value="2000"/> -->
     <param name="max_particles" value="2500"/>
     <!-- Maximum error between the true distribution and the estimated distribution. -->
     <param name="kld_err" value="0.05"/>
     <param name="kld_z" value="0.99"/>
     <!-- Translational movement required before performing a filter update.  -->
-    <param name="update_min_d" value="0.1"/>
+    <param name="update_min_d" value="0.3"/>
     <!--Rotational movement required before performing a filter update. -->
     <param name="update_min_a" value="0.314"/>
     <!-- Number of filter updates required before resampling. -->
@@ -32,17 +32,17 @@
     <param name="recovery_alpha_fast" value="0.1"/>
 
     <!-- Initial pose mean and covariances -->
-    <param name="initial_pose_x" value="0.0" />
+    <!--<param name="initial_pose_x" value="0.0" />
     <param name="initial_pose_y" value="0.0" />
     <param name="initial_pose_a" value="0.0" />
     <param name="initial_cov_xx" value="0.1" />
     <param name="initial_cov_yy" value="0.1" />
-    <param name="initial_cov_aa" value="0.1" />
+    <param name="initial_cov_aa" value="0.1" />-->
     <!-- Publish scans from best pose at a max of 10 Hz -->
     <param name="gui_publish_rate" value="20.0"/>
     <param name="use_map_topic" value="$(arg use_map_topic)"/>
     <!--  When set to true, AMCL will only use the first map it subscribes to, rather than updating each time a new one is received. -->
-    <param name="first_map_only" value="false"/>
+    <param name="first_map_only" value="true"/>
     <!-- When set to true, AMCL will subscribe to the map topic rather than making a service call to receive its map.-->
     <!-- PRETTY SURE THIS ISN'T A REAL PARAMETER, NOT FOUND ON AMCL WEBSITE -->
     <!-- <param name="receive_map_topic" value="true"/> -->
@@ -52,7 +52,7 @@
     <param name="laser_min_range" value="-1.0"/> # -1.0 means laser's reported min will be used
     <!-- <param name="laser_max_range" value="30.0"/> -->
     <param name="laser_max_range" value="-1.0"/> # -1.0 means laser's reported max will be used
-    <param name="laser_max_beams" value="120"/>
+    <param name="laser_max_beams" value="220"/>
     <!-- likelihood_field model uses only z_hit and z_rand - BUT DURING TESTING, CHANGING z_short AND z_max CLEARLY HAD AN EFFECT ON LOCALIZATION, SO I ADDED THEM BACK IN -->
     <param name="laser_model_type" value="likelihood_field_prob"/>
     <param name="laser_z_hit" value="9.0"/>

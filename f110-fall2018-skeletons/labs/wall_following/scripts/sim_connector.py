@@ -19,13 +19,13 @@ def vel_and_angle(data):
 	msg.drive.jerk = 1
 	msg.drive.steering_angle = data.angle
 	msg.drive.steering_angle_velocity = 1
-
+	#print("here")
 	pub.publish(msg)
 
 
 def listener():
 	rospy.init_node('sim_connect', anonymous=True)
-	rospy.Subscriber('drive_parameters', drive_param, vel_and_angle)
+	rospy.Subscriber('/drive_parameters', drive_param, vel_and_angle)
 	rospy.spin()
 
 

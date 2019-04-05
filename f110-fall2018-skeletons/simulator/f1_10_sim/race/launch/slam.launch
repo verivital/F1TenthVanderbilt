@@ -12,6 +12,6 @@
        <param name="map_update_interval" value="3.0"/>
        <param name="iterations" value="5"/>
    </node>
-   <node pkg="tf" type="static_transform_publisher" name="base_link_laser_broadcaster" args="0.265 0 0.125 0 0 0 base_link laser 100"/>
+   <!--<node pkg="tf" type="static_transform_publisher" name="base_link_laser_broadcaster" args="0.265 0 0.125 0 0 0 base_link laser 100"/>-->
    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find hector_mapping)/launch/visualizationdefault.rviz" />
 </launch>

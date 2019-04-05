@@ -33,11 +33,13 @@
     <!-- Map update parameters -->
     <param name="update_factor_free" value="0.4"/>
     <param name="update_factor_occupied" value="0.9" />    
-    <param name="map_update_distance_thresh" value="0.5"/>
+    <param name="map_update_distance_thresh" value="0.10"/>
     <param name="map_update_angle_thresh" value="0.05" />
+    <param name="laser_min_dist" value="0.01"/>
+    <param name="laser_max_dist" value="3.15"/>
     <param name="laser_z_min_value" value = "-1.5" />
     <param name="laser_z_max_value" value = "1.0" />
-    <param name="laser_max_dist" value = "10.0" />
+    <param name="laser_max_dist" value = "3.0" />
     
     <!-- Advertising config --> 
     <param name="advertise_map_service" value="true"/>
