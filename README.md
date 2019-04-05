@@ -17,3 +17,13 @@ Our car is modeled after the V2 using a Hokuyo UST-10LX lidar and ZED Camera for
 
 # How to Build the Code
 Since the code is written in Python, there is no need to build the code. Simply copy the content of the repository to their individual folders of your racecar package and it'll be good to run.
+
+# Simulation Files (work in progress, will add more details later)
+
+Porto Track Simulation using teb planner, amcl, map built from gmapping:
+
+```roslaunch race f1tenth.launch```
+
+Hallway simulation using teb planner, amcl, map built from gmapping:
+
+```roslaunch wall_following move_base.launch```
