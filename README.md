@@ -16,7 +16,7 @@ Our car is modeled after the V2 using a Hokuyo UST-10LX lidar and ZED Camera for
 **COME UP WITH THIS INFO**
 
 # How to Build the Code
-The particle filter depends on range_libc. Run the following to install the python wrappers for range_libc:
+The particle filter used for localization depends on [RangeLibc](https://github.com/kctess5/range_libc). Run the following to install the python wrappers for range_libc:
 
 ```cd range_libc/pywrappers```
 
