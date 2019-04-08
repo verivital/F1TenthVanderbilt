@@ -1,10 +1,4 @@
-#!/usr/bin/env python 
-
-import rospy 
-import actionlib
-from move_base_msgs.msg import MoveBaseAction, MoveBaseActionGoal,MoveBaseGoal
-
-waypoints=[(-0.000754, 0.000080, -0.000087, 1.000000
+(-0.000754, 0.000080, -0.000087, 1.000000
 ),(0.026490, 0.000759, 0.011787, 0.999931
 ),(0.057599, 0.002008, 0.022013, 0.999758
 ),(0.096179, 0.004306, 0.036133, 0.999347
@@ -1162,60 +1156,4 @@ waypoints=[(-0.000754, 0.000080, -0.000087, 1.000000
 ),(0.597443, 0.964502, -0.288415, -0.957505
 ),(0.609306, 0.972183, -0.287554, -0.957765
 ),(0.613615, 0.974894, -0.287750, -0.957706
-)]
-
-
-
-def go_to_goal(x,y,z,w):
-    global client
-    goal=MoveBaseGoal()
-    goal.target_pose.header.frame_id="map"
-    goal.target_pose.header.stamp=rospy.Time.now()
-    goal.target_pose.pose.position.x=x
-    goal.target_pose.pose.position.y=y
-    goal.target_pose.pose.orientation.z=z
-    goal.target_pose.pose.orientation.w=w
-
-    client.send_goal(goal)
-    wait=client.wait_for_result(rospy.Duration(2.0))
-    rospy.loginfo(str(wait))
-    if not wait:
-        rospy.logerr("Action server not available or goal did not complete")
-	#The rospy signal shutdown command shuts down a node the argument is a string describing the reason for shutting the node down
-        #rospy.signal_shutdown("Action sever not available!")
-    else:
-        return client.get_result()
-
-
-
-
-def movebase_client():
-    global client
-    goal=MoveBaseGoal()
-    goal.target_pose.header.frame_id="map"
-    goal.target_pose.header.stamp=rospy.Time.now()
-    goal.target_pose.pose.position.x=2.0
-    goal.target_pose.pose.position.y=0.0
-    goal.target_pose.pose.orientation.w=1.0
-
-    client.send_goal(goal)
-    wait=client.wait_for_result()
-
-    if not wait:
-        rospy.logerr("Action server not available")
-        rospy.signal_shutdown("Action sever not available!")
-    else:
-        return client.get_result()
-
-if __name__=="__main__":
-    try:
-        rospy.init_node("movebase_client_py")
-        client=actionlib.SimpleActionClient('move_base',MoveBaseAction)
-        client.wait_for_server()
-        for i in range(0,len(waypoints),40):
-            goal=waypoints[i]
-            result=go_to_goal(goal[0],goal[1],goal[2],goal[3])
-            if result:
-                rospy.loginfo("Goal Execution done!")
-    except rospy.ROSInterruptException:
-        rospy.loginfo("Navigation test finished")
+),

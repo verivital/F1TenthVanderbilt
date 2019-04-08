@@ -24,7 +24,7 @@ def cmd_callback(data):
   msg = AckermannDriveStamped()
   msg.header.stamp = rospy.Time.now()
   msg.header.frame_id = frame_id
-  msg.drive.steering_angle = steering #data.angular.z#steering
+  msg.drive.steering_angle = data.angular.z#steering
   msg.drive.speed = v
   
   pub.publish(msg)

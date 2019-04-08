@@ -16,7 +16,17 @@ Our car is modeled after the V2 using a Hokuyo UST-10LX lidar and ZED Camera for
 **COME UP WITH THIS INFO**
 
 # How to Build the Code
-Since the code is written in Python, there is no need to build the code. Simply copy the content of the repository to their individual folders of your racecar package and it'll be good to run.
+The particle filter depends on range_libc. Run the following to install the python wrappers for range_libc:
+
+```cd range_libc/pywrappers
+
+# on VM
+
+./compile.sh
+
+# on car - compiles GPU ray casting methods
+
+./compile_with_cuda.sh ```
 
 # Simulation Files (work in progress, will add more details later)
 
