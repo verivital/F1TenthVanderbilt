@@ -18,22 +18,26 @@ Our car is modeled after the V2 using a Hokuyo UST-10LX lidar and ZED Camera for
 # How to Build the Code
 The particle filter depends on range_libc. Run the following to install the python wrappers for range_libc:
 
-```cd range_libc/pywrappers
+```cd range_libc/pywrappers```
 
-# on VM
+##### on VM
 
-./compile.sh
+```./compile.sh```
 
-# on car - compiles GPU ray casting methods
+##### on car - compiles GPU ray casting methods
 
-./compile_with_cuda.sh ```
+```./compile_with_cuda.sh ```
 
 # Simulation Files (work in progress, will add more details later)
 
-Porto Track Simulation using teb planner, amcl, map built from gmapping:
-
+#### Run Simulation:
 ```roslaunch race f1tenth.launch```
+#### Run particle filter:
+```roslaunch particle_filter localize.launch```
 
-Hallway simulation using teb planner, amcl, map built from gmapping:
+#### Run pure pursuit
+```roslaunch a_stars_pure_pursuit pure_pursuit_sim.launch  ```
+
+#### Hallway simulation using teb planner, amcl, map built from gmapping:
 
 ```roslaunch wall_following move_base.launch```
