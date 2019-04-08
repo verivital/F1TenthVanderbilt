@@ -13,7 +13,9 @@ Team members are:
 Our car is modeled after the V2 using a Hokuyo UST-10LX lidar and ZED Camera for sensing and localization, with a NVIDIA TX2 for processing.
 
 # Repository Organization
-**COME UP WITH THIS INFO**
+**racecar-ws**: Code deployed on the physical car
+
+
 
 # How to Build the Code
 The particle filter used for localization depends on [RangeLibc](https://github.com/kctess5/range_libc). Run the following to install the python wrappers for range_libc:
