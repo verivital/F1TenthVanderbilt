@@ -1,0 +1,14 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~force_scale_x" : \b [double] Force scale x min: -1.0, default: 0.07, max: 1.0
+- \b "~force_scale_y" : \b [double] Force scale y min: -1.0, default: 0.07, max: 1.0
+- \b "~force_offset_x" : \b [double] Force offset x min: -300.0, default: 100.0, max: 300.0
+- \b "~force_offset_y" : \b [double] Force offset y min: -1.0, default: 0.0, max: 1.0
+- \b "~speed_p_gain" : \b [double] Speed P gain min: -1.0, default: 0.05, max: 1.0
+- \b "~steering_p_gain" : \b [double] Steering P gain min: -5.0, default: 1.0, max: 5.0
+- \b "~steering_d_gain" : \b [double] Steering D gain min: -1.0, default: 0.0, max: 1.0
+- \b "~viz_forces_scale" : \b [double] Visualization scale factor for forces min: -1.0, default: 0.07, max: 1.0
+- \b "~viz_net_force_scale" : \b [double] Visualization scale factor for net force min: -1.0, default: 0.014, max: 1.0
+

@@ -1,0 +1,8 @@
+prefix=/home/nvidia/racecar-ws/install
+
+Name: racecar_potential_field_controller
+Description: Description of racecar_potential_field_controller
+Version: 0.0.1
+Cflags: -I/home/nvidia/racecar-ws/install/include -I/usr/include/eigen3
+Libs: -L/home/nvidia/racecar-ws/install/lib 
+Requires: nodelet pluginlib dynamic_reconfigure roscpp sensor_msgs ackermann_msgs visualization_msgs

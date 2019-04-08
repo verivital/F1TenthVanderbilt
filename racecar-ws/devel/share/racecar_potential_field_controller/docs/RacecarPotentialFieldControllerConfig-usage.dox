@@ -1,0 +1,15 @@
+\subsubsection usage Usage
+\verbatim
+<node name="potential_field_controller" pkg="racecar_potential_field_controller" type="potential_field_controller">
+  <param name="force_scale_x" type="double" value="0.07" />
+  <param name="force_scale_y" type="double" value="0.07" />
+  <param name="force_offset_x" type="double" value="100.0" />
+  <param name="force_offset_y" type="double" value="0.0" />
+  <param name="speed_p_gain" type="double" value="0.05" />
+  <param name="steering_p_gain" type="double" value="1.0" />
+  <param name="steering_d_gain" type="double" value="0.0" />
+  <param name="viz_forces_scale" type="double" value="0.07" />
+  <param name="viz_net_force_scale" type="double" value="0.014" />
+</node>
+\endverbatim
+

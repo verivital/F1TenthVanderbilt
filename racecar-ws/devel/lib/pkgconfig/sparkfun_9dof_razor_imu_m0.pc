@@ -1,0 +1,8 @@
+prefix=/home/nvidia/racecar-ws/devel
+
+Name: sparkfun_9dof_razor_imu_m0
+Description: Description of sparkfun_9dof_razor_imu_m0
+Version: 0.0.1
+Cflags: -I/home/nvidia/racecar-ws/src/racecar/sparkfun_9dof_razor_imu_m0/include
+Libs: -L/home/nvidia/racecar-ws/devel/lib 
+Requires: nodelet pluginlib roscpp sensor_msgs serial

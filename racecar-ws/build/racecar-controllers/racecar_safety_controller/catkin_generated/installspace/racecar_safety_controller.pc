@@ -1,0 +1,8 @@
+prefix=/home/nvidia/racecar-ws/install
+
+Name: racecar_safety_controller
+Description: Description of racecar_safety_controller
+Version: 0.0.1
+Cflags: 
+Libs: -L/home/nvidia/racecar-ws/install/lib 
+Requires: 

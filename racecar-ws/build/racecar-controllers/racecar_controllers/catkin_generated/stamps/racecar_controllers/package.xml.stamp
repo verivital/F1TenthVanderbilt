@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+  <name>racecar_controllers</name>
+  <version>0.0.1</version>
+  <description>
+    racecar_controllers is a metapackage providing various controllers for the RACECAR platform.
+  </description>
+
+  <maintainer email="boulet@ll.mit.edu">Michael Boulet</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <run_depend>racecar_safety_controller</run_depend>
+  <run_depend>racecar_potential_field_controller</run_depend>
+
+  <export>
+    <metapackage/> 
+  </export>
+</package>

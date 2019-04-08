@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package>
+  <name>sparkfun_9dof_razor_imu_m0</name>
+  <version>0.0.1</version>
+  <description>Driver for the SparkFun 9DoF Razor IMU M0</description>
+
+  <maintainer email="boulet@ll.mit.edu">Michael T. Boulet</maintainer>
+  <author email="boulet@ll.mit.edu">Michael T. Boulet</author>
+  <license>BSD</license>
+
+  <url type="website">http://www.ros.org/wiki/sparkfun_9dof_razor_imu_m0</url>
+  <url type="repository">https://github.com/mit-racecar/sparkfun_9dof_razor_imu_m0</url>
+  <url type="bugtracker">https://github.com/mit-racecar/sparkfun_9dof_razor_imu_m0/issues</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>nodelet</build_depend>
+  <build_depend>pluginlib</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>serial</build_depend>
+  
+  <run_depend>nodelet</run_depend>
+  <run_depend>pluginlib</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>serial</run_depend>
+
+  <export>
+    <nodelet plugin="${prefix}/nodelet_plugin.xml"/>
+  </export>
+</package>
