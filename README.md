@@ -30,6 +30,7 @@ Our car is modeled after the V2 using a Hokuyo UST-10LX lidar and ZED Camera for
 
 
 # Algorithms
+A good summary of the algorithms needed to implement an autonomous racecar using localization and planning can be found on pages 46-73 of the [BuildV2 manual](https://github.com/verivital/F1TenthVanderbilt/blob/master/BuildV2.pdf).
 
 
 
