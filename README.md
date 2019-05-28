@@ -39,7 +39,9 @@ The simulation packages in this repository contain code to run a car autonomousl
 To launch the simulation run the following roslaunch command:
 ```roslaunch race f1tenth.launch```
 
-This will start Gazebo and ROS. A window will pop showing a racecar in a track with all of the relevant sensors running. 
+This will start Gazebo and ROS. A window will pop showing the racecar in a track with all of the relevant sensors running.
+ROS messages from the camera are broadcasted on the ```/camera/zed/rgb/*``` topics,  and the lidar data is broadcasted on the ```/scan``` topic.
+
 
 ![Simulation Image](./images/simulator.png "Simulation Image")
 
