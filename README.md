@@ -1,13 +1,13 @@
 # The FLASH Van 
 The team name stands for **F**u**l**ly **A**utonomous but **S**tuff **H**appens and we are from **Van**derbilt.
 Team members are:
-* Patrick Musau (Project Leader)
-* Feiyang Cai
-* Tim Darrah
-* Nathaniel (Nate) Hamilton
-* Diego Manzanas Lopez
-* Shreyas Ramakrishna
-* Ayana Wild
+* [Patrick Musau](https://www.linkedin.com/in/musaup/) (Project Leader)
+* [Diego Manzanas Lopez](https://www.linkedin.com/in/diego-manzanas-3b4841106/)
+* [Nathaniel (Nate) Hamilton](https://www.linkedin.com/in/nathaniel-hamilton-b01942112/)
+* [Feiyang Cai](https://www.linkedin.com/in/feiyang-cai-8b845a124/)
+* [Tim Darrah](https://www.linkedin.com/in/timothydarrah/)
+* [Shreyas Ramakrishna](https://www.linkedin.com/in/shreyasramakrishna/)
+* [Ayana Wild](https://www.linkedin.com/in/ayana-wild/)
 
 ![Team Picture](./images/team_picture.jpeg "Team Picture")
 
@@ -15,22 +15,21 @@ Team members are:
 Our car is modeled after the V2 using a Hokuyo UST-10LX lidar and ZED Camera for sensing and localization, with a NVIDIA TX2 for processing. For information about our build configuration, kindly refer to the following [pdf](https://github.com/verivital/F1TenthVanderbilt/blob/master/BuildV2.pdf).
 
 # Repository Organization
-**racecar-ws**: Code deployed on the physical car
+**racecar-ws**: Code deployed on the physical car. 
+
+**f110-fall2018-skeletons**: F1Tenth Simulation Code
+
+**hector_slam**: ROS hector_slam package. Used to learn a map of the environment and simultaneosuly esimate the platforms 2D pose at laser scanner frame rate.
+
+**particle_filter**: A fast particle filter localization algorithm developped by Corey Walsh et al.
+
+**range_libc**: Raycasting library utilized the particle filter package
+
+**a_stars_pure_pursuit**: ROS package for a pure pursuit motion planner developped by sidsingh@seas.upenn.edu
 
 
 
-# How to Build the Code
-The particle filter used for localization depends on [RangeLibc](https://github.com/kctess5/range_libc). Run the following to install the python wrappers for range_libc:
-
-```cd range_libc/pywrappers```
-
-##### on VM
-
-```./compile.sh```
-
-##### on car - compiles GPU ray casting methods
-
-```./compile_with_cuda.sh ```
+# Algorithms
 
 
 
