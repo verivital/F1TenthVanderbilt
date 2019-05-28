@@ -1,11 +1,11 @@
 # The FLASH Van 
 The team name stands for **F**u**l**ly **A**utonomous but **S**tuff **H**appens and we are from **Van**derbilt.
 Team members are:
+* Patrick Musau (Project Leader)
 * Feiyang Cai
 * Tim Darrah
 * Nathaniel (Nate) Hamilton
 * Diego Manzanas Lopez
-* Patrick Musau         (Project Leader)
 * Shreyas Ramakrishna
 * Ayana Wild
 
@@ -30,9 +30,13 @@ The particle filter used for localization depends on [RangeLibc](https://github.
 
 ```./compile_with_cuda.sh ```
 
-# Simulation Files (work in progress, will add more details later)
-
-#### Run Simulation:
+# F1Tenth Simulation
+The simulation packages in this repository contain code to run a car autonomously on a race track/circuit. The simulator was built using [ROS](http://wiki.ros.org/) and [Gazebo](http://gazebosim.org/tutorials). There are several race tracks available for testing and they are contained in racecar_gazebo/worlds directory. However, the majority of our testing utilized the following .world files:
+  1. track_barca.world
+  2. track_porto.world
+  3. track_levine.world
+ 
+To launch the simulation run the following roslaunch command:
 ```roslaunch race f1tenth.launch```
 #### Run particle filter:
 ```roslaunch particle_filter localize.launch```
