@@ -12,7 +12,7 @@ Team members are:
 ![Team Picture](./images/team_picture.jpeg "Team Picture")
 
 # Vehicle Configuration
-Our car is modeled after the V2 using a Hokuyo UST-10LX lidar and ZED Camera for sensing and localization, with a NVIDIA TX2 for processing.
+Our car is modeled after the V2 using a Hokuyo UST-10LX lidar and ZED Camera for sensing and localization, with a NVIDIA TX2 for processing. For information about our build configuration, kindly refer to the following [pdf](https://github.com/verivital/F1TenthVanderbilt/blob/master/BuildV2.pdf).
 
 # Repository Organization
 **racecar-ws**: Code deployed on the physical car
@@ -42,6 +42,8 @@ The simulation packages in this repository contain code to run a car autonomousl
 
 ##### You will need to install the following ROS packages to get the simulator to work
 
+Assuming you have ROS and Gazebo installed run: 
+
 ```bash
 $ sudo apt-get install ros-kinetic-ros-control ros-kinetic-ros-controllers ros-kinetic-gazebo-ros-control ros-kinetic-ackermann-msgs ros-kinetic-joy
 ```
@@ -60,8 +62,6 @@ This will start Gazebo, [RViz](http://wiki.ros.org/rviz) and ROS. At a high leve
 - [/message_to_tf](https://github.com/verivital/F1TenthVanderbilt/blob/master/f110-fall2018-skeletons/simulator/f1_10_sim/race/scripts/message_to_tf.py): creates an odometric frame for the car so that the transformation tree in ROS is completer
 - [/map_server](http://wiki.ros.org/map_server#map_saver): loads and saves occupancy grids obtained from SLAM algorithms
 
-
-
 #### Important ROS Topics
 - ROS messages from the camera are broadcasted on the ```/camera/zed/rgb/*``` topics, 
 - Lidar data is broadcasted on the ```/scan``` topic.
@@ -69,18 +69,14 @@ This will start Gazebo, [RViz](http://wiki.ros.org/rviz) and ROS. At a high leve
 - IMU (Inertial Measurement Unit) data is broadcasted on the ```/imu``` topic
 -  The topic ```/vesc/ackermann_cmd_mux/input/teleop```  is of type ackermann_msgs/AckermannDriveStamped. Publishing an AckermannDrive Stamped message on this topic will casue the car to move
 
+#### Changing the track
+To change the track utilized in the simulation change value parameter at the top of [f1_tenth.launch](https://github.com/verivital/F1TenthVanderbilt/blob/master/f110-fall2018-skeletons/simulator/f1_10_sim/race/launch/f1_tenth.launch) ```<arg name="world_name" value="track_porto"/>``` to one of the names listed in the racecar_gazebo/worlds directory as mentioned above.
 
-
-
-
-
-
-
-#### Run particle filter:
+#### Run the particle filter:
 ```roslaunch particle_filter localize.launch```
 #### Run pure pursuit
 ```roslaunch a_stars_pure_pursuit pure_pursuit_sim.launch  ```
-
 #### Hallway simulation using teb planner, amcl, map built from gmapping:
-
 ```roslaunch wall_following move_base.launch```
+
+Once you have run the above command. Navigate to rviz and set to navigation goals by clicking on the toolbar at the top of the screen in order to make the car move. 
