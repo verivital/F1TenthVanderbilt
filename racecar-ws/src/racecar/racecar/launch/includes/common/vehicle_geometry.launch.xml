@@ -1,0 +1,21 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+  <arg name="racecar_version" />
+  <arg name="publish_static_transforms" default="true" />
+  <arg name="publish_footprint" default="true" />
+  <arg name="vehicle_geometry_config" default="$(find racecar)/config/$(arg racecar_version)/vehicle_geometry.yaml" />
+  <arg name="vehicle_footprint_config" default="$(find racecar)/config/$(arg racecar_version)/vehicle_footprint.yaml" />
+
+  <group ns="vehicle_geometry">
+    <!-- set parameters -->
+    <rosparam file="$(arg vehicle_geometry_config)" command="load" />
+
+    <!-- publish footprint polygon -->
+    <node if="$(arg publish_footprint)" name="footprint" pkg="rostopic" type="rostopic" args="pub -l -f '$(arg vehicle_footprint_config)' footprint geometry_msgs/PolygonStamped" />
+
+    <!-- static transforms -->
+    <include if="$(arg publish_static_transforms)" file="$(find racecar)/launch/includes/$(arg racecar_version)/static_transforms.launch.xml" />
+
+  </group>
+  
+</launch>

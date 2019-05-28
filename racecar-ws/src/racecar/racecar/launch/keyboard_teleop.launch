@@ -1,0 +1,15 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+  <arg name="racecar_version" default="$(optenv RACECAR_VERSION racecar-v2)" doc="system version [racecar-v1, racecar-v2]" />
+  <arg name="imu_model" default="$(optenv RACECAR_IMU razor_imu_m0)" doc="imu sensor types [razor_imu, razor_imu_m0]" />
+  <arg name="run_camera" default="false"/>
+
+  <include file="$(find racecar)/launch/includes/$(arg racecar_version)-teleop.launch.xml">
+    <arg name="imu_model" value="$(arg imu_model)" />
+    <arg name="run_camera" value="$(arg run_camera)" />
+  </include>
+
+  <node name="sim_connector" pkg="racecar" type="sim_connector.py" output="screen" />
+  <node name="key_board" pkg="racecar" type="keyboard.py" output="screen" />
+
+</launch>

@@ -1,0 +1,7 @@
+
+laser_node:
+  ip_address: 192.168.0.10
+
+imu_node:
+  port: /dev/imu
+  frame_id: base_imu_link

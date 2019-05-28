@@ -1,0 +1,10 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+  <arg name="racecar_version" />
+
+  <!-- safety controller -->
+  <node pkg="racecar_safety_controller" type="safety_controller_node.py" name="safety_controller">
+    <remap from="ackermann_cmd_input" to="ackermann_cmd_mux/output" />
+  </node>
+
+</launch>

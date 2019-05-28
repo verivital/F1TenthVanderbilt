@@ -1,0 +1,5 @@
+<library path="lib/libracecar_potential_field_controller_nodelet">
+  <class type="racecar_potential_field_controller::Nodelet" base_class_type="nodelet::Nodelet">
+    <description>RACECAR Potential Field Controller nodelet.</description>
+  </class>
+</library>

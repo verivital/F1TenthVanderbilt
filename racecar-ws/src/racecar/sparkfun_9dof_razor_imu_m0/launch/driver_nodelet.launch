@@ -1,0 +1,36 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+
+  <arg name="node_name" default="imu_driver" />
+  <arg name="start_manager" default="true" />
+  <arg name="manager" default="imu_nodelet_manager" />
+
+  <!-- Optionally launch manager in GDB, for debugging -->
+  <arg name="debug" default="false" />
+  <arg if="$(arg debug)" name="launch_prefix" value="xterm -e gdb --args" />
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+  <!-- Worker threads -->
+  <arg name="num_worker_threads" default="4" />
+
+  <!-- driver parameters -->
+  <arg name="set_logger_level_debug" default="false" />
+  <arg name="port" default="/dev/ttyUSB0" />
+  
+  <!-- Also globally disable bond heartbeat timeout in debug mode, so everything
+       doesn't die when you hit a break point -->
+  <param if="$(arg debug)" name="/bond_disable_heartbeat_timeout" value="true" />
+
+  <!-- nodelet manager -->
+  <node if="$(arg start_manager)" pkg="nodelet" type="nodelet" name="$(arg manager)"
+        args="manager" output="screen" launch-prefix="$(arg launch_prefix)">
+     <param name="num_worker_threads" value="$(arg num_worker_threads)" />
+  </node>
+
+  <!-- driver nodelet -->
+  <node pkg="nodelet" type="nodelet" name="$(arg node_name)"
+        args="load sparkfun_9dof_razor_imu_m0::DriverNodelet $(arg manager)" >
+    <param name="set_logger_level_debug" value="$(arg set_logger_level_debug)" />
+    <param name="port" value="$(arg port)" />
+  </node>    
+
+</launch>

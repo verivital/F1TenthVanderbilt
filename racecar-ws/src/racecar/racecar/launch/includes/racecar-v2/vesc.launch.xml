@@ -1,0 +1,25 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+  <arg name="racecar_version" />
+
+  <arg name="vesc_config" default="$(find racecar)/config/$(arg racecar_version)/vesc.yaml" />
+
+  <group ns="vesc">
+    <rosparam file="$(arg vesc_config)" command="load" />
+
+    <!-- convert from ackermann messages to VESC messages -->
+    <node pkg="vesc_ackermann" type="ackermann_to_vesc_node" name="ackermann_to_vesc">
+      <remap from="ackermann_cmd" to="/ackermann_cmd" />
+    </node>
+
+    <!-- VESC driver -->
+    <node pkg="vesc_driver" type="vesc_driver_node" name="vesc_driver" />
+
+    <!-- calculate odometry from VESC sensors -->
+    <node pkg="vesc_ackermann" type="vesc_to_odom_node" name="vesc_to_odom">
+      <remap from="wheelbase" to="/vehicle_geometry/wheelbase" />
+      <remap from="odom" to="/odom" />
+    </node>
+  </group>
+
+</launch>

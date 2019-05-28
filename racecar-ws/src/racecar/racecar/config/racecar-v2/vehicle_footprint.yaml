@@ -1,0 +1,17 @@
+header:
+  stamp: now
+  frame_id: base_footprint
+polygon:
+  points:
+  - x: 0.406
+    y: 0.146
+    z: 0.0
+  - x: -0.102
+    y: 0.146
+    z: 0.0
+  - x: -0.102
+    y: -0.146
+    z: 0.0
+  - x: 0.406
+    y: -0.146
+    z: 0.0

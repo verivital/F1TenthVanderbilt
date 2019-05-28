@@ -1,0 +1,7 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+
+  <node pkg="racecar_safety_controller" type="safety_controller_node.py" name="safety_controller">
+  </node>
+
+</launch>

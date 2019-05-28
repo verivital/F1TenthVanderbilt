@@ -1,0 +1,14 @@
+# config file for vehicle geometry
+
+# Note: also see vehicle_footprint.yaml
+
+# car wheelbase (distance between front and rear wheels)
+wheelbase: .250
+
+# car track (distance between left and right wheels)
+track: 0.255
+
+# car dimensions (note redundant data in vehicle_footprint.yaml)
+length: 0.508
+width: 0.292
+height: 0.195

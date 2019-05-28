@@ -1,0 +1,27 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+  <arg name="racecar_version" default="racecar-v2" />
+  <arg name="run_camera" default="false" />
+  <arg name="run_teleop" default="false" />
+  <arg name="config"     default="default" />
+  <arg name="config_path" default="$(find racecar_potential_field_controller)/config/$(arg config).yaml" />
+  <arg name="run_viz" default="false"/>
+
+  <group if="$(arg run_teleop)">
+    <include file="$(find racecar)/launch/teleop.launch">
+      <arg name="racecar_version" value="$(arg racecar_version)" />
+      <arg name="run_camera" value="$(arg run_camera)" />
+    </include>
+  </group>
+
+  <node pkg="racecar_potential_field_controller" type="node" name="potential_field_controller" output="screen">
+    <remap from="navigation" to="/ackermann_cmd_mux/input/navigation" />
+    <rosparam file="$(arg config_path)" command="load" />
+  </node>
+
+  <group if="$(arg run_viz)">
+    <include file="$(find racecar_potential_field_controller)/launch/viz.launch">
+    </include>
+  </group>
+
+</launch>

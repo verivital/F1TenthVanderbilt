@@ -1,0 +1,5 @@
+<library path="lib/libsparkfun_9dof_razor_imu_m0_driver_nodelet">
+  <class type="sparkfun_9dof_razor_imu_m0::DriverNodelet" base_class_type="nodelet::Nodelet">
+    <description>SparkFun 9DoF Razor IMU M0 interface nodelet.</description>
+  </class>
+</library>

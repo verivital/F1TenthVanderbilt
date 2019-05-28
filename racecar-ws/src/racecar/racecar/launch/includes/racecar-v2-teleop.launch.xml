@@ -1,0 +1,42 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+  <arg name="racecar_version" value="racecar-v2" />
+  <arg name="imu_model" default="$(optenv RACECAR_IMU razor_imu_m0)" doc="imu sensor types [razor_imu, razor_imu_m0]" />
+  <arg name="run_camera" default="false"/>
+
+  <!-- vehicle geometry parameters, footprint, and static transforms -->
+  <include file="$(find racecar)/launch/includes/common/vehicle_geometry.launch.xml">
+    <arg name="racecar_version" value="$(arg racecar_version)" />
+  </include>
+
+  <!-- joystick to ackermann command -->
+  <include file="$(find racecar)/launch/includes/common/joy_teleop.launch.xml" >
+    <arg name="racecar_version" value="$(arg racecar_version)" />
+  </include>
+
+  <!-- default (zero) ackermann command -->
+  <node name="zero_ackermann_cmd" pkg="rostopic" type="rostopic" args="pub -r 4 ackermann_cmd_mux/input/default ackermann_msgs/AckermannDriveStamped '{header: auto, drive: {steering_angle: 0.0, speed: 0.0} }'" />
+
+  <!-- priority-based command multiplexer -->
+  <include file="$(find ackermann_cmd_mux)/launch/standalone.launch">
+    <arg name="nodelet_manager_name" value="ackermann_cmd_mux_nodelet_manager" />
+    <arg name="config_file" value="$(find racecar)/config/$(arg racecar_version)/mux.yaml" />
+  </include>
+
+  <!-- controllers -->
+  <include file="$(find racecar)/launch/includes/common/controllers.launch.xml">  
+    <arg name="racecar_version" value="$(arg racecar_version)" />
+  </include>
+  
+  <!-- start electronic speed controller driver -->
+  <include file="$(find racecar)/launch/includes/$(arg racecar_version)/vesc.launch.xml" >
+    <arg name="racecar_version" value="$(arg racecar_version)" />
+  </include>
+
+  <!-- start imu and laser scanner -->
+  <include file="$(find racecar)/launch/includes/common/sensors.launch.xml" >
+    <arg name="racecar_version" value="$(arg racecar_version)" />
+    <arg name="imu_model" value="$(arg imu_model)" />    
+  </include>
+
+</launch>

@@ -1,0 +1,24 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+  <!-- launch script arguments -->
+  <arg name="bag"/>
+  <arg name="rate"   default="1.0"/>
+  <arg name="start"  default="0.0"/>
+  <arg name="delay"  default="5.0"/>
+  <arg name="output" default="log"/>
+  <arg name="prefix" default=""/>
+  <arg name="all"    default="true"/>
+  <arg name="topics" default=""/>
+
+  
+  <!-- bag file player -->
+  <param name="/use_sim_time" value="true"/>
+  <group if="$(arg all)">
+    <node pkg="rosbag" type="play" name="play" output="$(arg output)" launch-prefix="$(arg prefix)"
+          args="$(arg bag) --start $(arg start) --rate $(arg rate) --clock --delay=$(arg delay)"/>
+  </group>
+  <group unless="$(arg all)">
+    <node pkg="rosbag" type="play" name="play" output="$(arg output)" launch-prefix="$(arg prefix)"
+          args="$(arg bag) --start $(arg start) --rate $(arg rate) --clock --delay=$(arg delay) --topics $(arg topics)"/>
+  </group>
+</launch>
