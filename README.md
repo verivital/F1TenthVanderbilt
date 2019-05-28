@@ -79,3 +79,4 @@ To change the track utilized in the simulation change value parameter at the top
 ```roslaunch wall_following move_base.launch```
 
 Once you have run the above command. Navigate to rviz and set to navigation goals by clicking on the toolbar at the top of the screen in order to make the car move. 
+![move_base](./images/teb.png "move_base")
