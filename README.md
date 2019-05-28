@@ -32,7 +32,9 @@ Our car is modeled after the V2 using a Hokuyo UST-10LX lidar and ZED Camera for
 # Algorithms
 A good summary of the algorithms needed to implement an autonomous racecar using localization and planning can be found on pages 46-73 of the [BuildV2 manual](https://github.com/verivital/F1TenthVanderbilt/blob/master/BuildV2.pdf).
 
-
+We implemented two racing strategies in simulation that I will briefly summarize below.  
+1. The first strategy made use of the [teb local planner](http://wiki.ros.org/teb_local_planner) ROS pacakge for path planning, Adaptive Montecarlo Localization [(AMCL)](http://wiki.ros.org/amcl) for probabilistic localization, and [gmapping](http://wiki.ros.org/gmapping) for laser-based SLAM (Simultaneous Localization and Mapping). The challenge here was generating goal points that resulted in smooth driving. Additionally one thing we will try in the future is to use the MIT particle filter for localization instead of amcl.
+2. The second strategy used the a_stars_pure_pursuit pacakge for path planning, MIT particle filter for localiztion, and [gmapping](http://wiki.ros.org/gmapping) for laser-based SLAM (Simultaneous Localization and Mapping). This was by far our most successful strategy in terms of speed and smoothness of driving. However unfortunately we were not able to translate these results onto the physical car in time for the competition. To run the simulation follow the instructions below.
 
 # F1Tenth Simulation
 The simulation packages in this repository contain code to run a car autonomously on a race track/circuit. The simulator was  originally developed by the [mLAB: Real-Time and Embedded Systems Lab](https://github.com/mlab-upenn/f110-fall2018-skeletons) at the University of Pennsylvania and we have customized it for our own experiments. The simulator was built using [ROS](http://wiki.ros.org/) and [Gazebo](http://gazebosim.org/tutorials). There are several race tracks available for testing and they are contained in racecar_gazebo/worlds directory. However, the majority of our testing utilized the following .world files:
@@ -72,12 +74,22 @@ This will start Gazebo, [RViz](http://wiki.ros.org/rviz) and ROS. At a high leve
 #### Changing the track
 To change the track utilized in the simulation change value parameter at the top of [f1_tenth.launch](https://github.com/verivital/F1TenthVanderbilt/blob/master/f110-fall2018-skeletons/simulator/f1_10_sim/race/launch/f1_tenth.launch) ```<arg name="world_name" value="track_porto"/>``` to one of the names listed in the racecar_gazebo/worlds directory as mentioned above.
 
-#### Run the particle filter:
-```roslaunch particle_filter localize.launch```
-#### Run pure pursuit
-```roslaunch a_stars_pure_pursuit pure_pursuit_sim.launch  ```
-#### Hallway simulation using teb planner, amcl, map built from gmapping:
+#### Strategy 1: Hallway simulation using teb planner, amcl, map built from gmapping:
 ```roslaunch wall_following move_base.launch```
 
 Once you have run the above command. Navigate to rviz and set to navigation goals by clicking on the toolbar at the top of the screen in order to make the car move. 
 ![move_base](./images/teb.png "move_base")
+
+#### Strategy 2: Pure Pursuit and Particle Filter Localization
+Run the simulation:
+```roslaunch race f1tenth.launch```
+
+Run the particle filter:
+```roslaunch particle_filter localize.launch```
+
+Run pure pursuit
+```roslaunch a_stars_pure_pursuit pure_pursuit_sim.launch  ```
+
+
+
+
