@@ -38,8 +38,11 @@ The simulation packages in this repository contain code to run a car autonomousl
  
 To launch the simulation run the following roslaunch command:
 ```roslaunch race f1tenth.launch```
+
 This will start Gazebo and ROS. A window will pop showing a racecar in a track with all of the relevant sensors running. 
-![alt text](https://github.com/verivital/F1TenthVanderbilt/tree/master/images/simulator.png)
+
+![Simulation Image](./images/simulator.png "Simulation Image")
+
 #### Run particle filter:
 ```roslaunch particle_filter localize.launch```
 #### Run pure pursuit
