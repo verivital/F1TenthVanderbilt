@@ -9,6 +9,8 @@ Team members are:
 * Shreyas Ramakrishna
 * Ayana Wild
 
+![Team Picture](./images/team_picture.jpeg "Team Picture")
+
 # Vehicle Configuration
 Our car is modeled after the V2 using a Hokuyo UST-10LX lidar and ZED Camera for sensing and localization, with a NVIDIA TX2 for processing.
 
