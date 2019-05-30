@@ -83,9 +83,11 @@ Once you have run the above command. Navigate to rviz and set to navigation goal
 #### Strategy 2: Pure Pursuit and Particle Filter Localization
 Run the simulation:
 ```roslaunch race f1tenth.launch```
+This script simply launches the car in the racetrack, enables keyboard teleoperation, and launches the relevant sensors
 
 Run the particle filter:
 ```roslaunch particle_filter localize.launch```
+**Note**: It takes the particle filter a couple of seconds to receive an initial position from Gazebo before the node begins publishing. 
 
 Run pure pursuit
 ```roslaunch a_stars_pure_pursuit pure_pursuit_sim.launch  ```
