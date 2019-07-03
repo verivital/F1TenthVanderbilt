@@ -44,6 +44,16 @@ The simulation packages in this repository contain code to run a car autonomousl
 
 ##### You will need to install the following ROS packages to get the simulator to work
 
+#### Docker
+```docker build -t ros_test .```
+
+```docker container run --rm --runtime=nvidia -it -e DISPLAY  --env="QT_X11_NO_MITSHM=1" -v /tmp/.X11-unix:/tmp/.X11-unix -d ros_test```
+
+```xhost +local:root``` **this is not secure**
+
+**When you are done run :** ```xhost -local:root ```
+
+#### Local Install
 Assuming you have ROS and Gazebo installed run: 
 
 ```bash
