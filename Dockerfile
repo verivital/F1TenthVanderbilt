@@ -35,7 +35,6 @@ ENV ROS_DISTRO kinetic
 RUN apt-get update && apt-get install -y ros-kinetic-desktop-full && rosdep update && apt install -y python-rosinstall python-rosinstall-generator python-wstool build-essential
 
 
-
 #install some ros packages we are gonna need
 RUN apt-get update && apt-get install -y ros-kinetic-driver-base ros-kinetic-ros-control ros-kinetic-ros-controllers ros-kinetic-gazebo-ros-control ros-kinetic-ackermann-msgs ros-kinetic-joy
 #navigate to home directory 

@@ -1,0 +1,52 @@
+version: '2.3'
+
+services: 
+  rosmaster: 
+    image: ros_test
+    build: .
+    container_name: rosmaster
+    command: /bin/bash -c 'source devel/setup.bash && roscore'
+
+  f1tenth:
+    image: ros_test
+    build: .
+    container_name: f1tenth
+    runtime: nvidia
+    depends_on:
+      - "rosmaster"
+    environment:
+      - DISPLAY
+      - QT_X11_NO_MITSHM=1
+      - "ROS_HOSTNAME=f1tenth"
+      - "ROS_MASTER_URI=http://rosmaster:11311" 
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ros-logs:/root/.ros/
+      - ./a_stars_pure_pursuit:/root/catkin_ws/src/a_stars_pure_pursuit
+      - gazebo-files:/root/.gazebo/
+    command: /bin/bash -c 'source devel/setup.bash && roslaunch race docker.launch'
+  
+  rviz:
+    image: ros_test
+    build: .
+    container_name: rviz
+    runtime: nvidia
+    depends_on:
+      - "rosmaster"
+      - "f1tenth"
+    environment:
+      - DISPLAY
+      - QT_X11_NO_MITSHM=1
+      - "ROS_HOSTNAME=rviz"
+      - "ROS_MASTER_URI=http://rosmaster:11311" 
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ./a_stars_pure_pursuit:/root/catkin_ws/src/a_stars_pure_pursuit
+    command: /bin/bash -c 'source devel/setup.bash && roslaunch race docker_rviz.launch'
+    #network_mode: "host"
+
+  
+
+volumes:
+  ros-logs:
+  gazebo-files:
