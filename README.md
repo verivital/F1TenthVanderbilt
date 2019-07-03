@@ -51,6 +51,13 @@ The simulation packages in this repository contain code to run a car autonomousl
 
 ```xhost +local:root``` **this is not secure**
 
+Simple way to run everything:
+
+```docker build -t ros_test .```
+
+```docker-compose up```
+
+
 **When you are done run :** ```xhost -local:root ```
 
 #### Local Install
