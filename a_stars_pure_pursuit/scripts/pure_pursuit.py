@@ -35,7 +35,8 @@ class pure_pursuit:
 
         dirname  = os.path.dirname(__file__)
         #filename = os.path.join(dirname, '../waypoints/levine-waypoints.csv')
-        filename='/home/musaup/Documents/catkin_ws/src/f110-fall2018-skeletons/labs/wall_following/logs/pure-pursuit-wp-2019-04-07-22-39-51.csv'
+	dir_path=os.path.dirname(os.path.realpath(__file__))
+        filename=dir_path+'/pure-pursuit-wp-2019-04-07-22-39-51.csv'
         #filename='/home/musaup/Documents/catkin_ws/src/f110-fall2018-skeletons/labs/wall_following/logs/pure-pursuit-wp-2019-04-08-02-28-24.csv'
         #filename = os.path.join(dirname, '../waypoints/levine-waypoints.csv')
 

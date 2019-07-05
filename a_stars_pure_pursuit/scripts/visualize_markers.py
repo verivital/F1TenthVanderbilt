@@ -11,7 +11,8 @@ import csv
 import pdb
 
 dirname = os.path.dirname(__file__)
-filename='/home/musaup/Documents/catkin_ws/src/f110-fall2018-skeletons/labs/wall_following/logs/pure-pursuit-wp-2019-04-07-22-39-51.csv'
+dir_path=os.path.dirname(os.path.realpath(__file__))
+filename=dir_path+'/pure-pursuit-wp-2019-04-07-22-39-51.csv'
 #filename='/home/musaup/Documents/catkin_ws/src/f110-fall2018-skeletons/labs/wall_following/logs/pure-pursuit-wp-2019-04-08-02-28-24.csv'
 with open(filename) as f:
 	path_points = [tuple(line) for line in csv.reader(f)]

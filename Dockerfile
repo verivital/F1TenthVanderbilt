@@ -39,6 +39,17 @@ RUN apt-get update && apt-get install -y ros-kinetic-desktop-full && rosdep upda
 RUN apt-get update && apt-get install -y ros-kinetic-driver-base ros-kinetic-ros-control ros-kinetic-ros-controllers ros-kinetic-gazebo-ros-control ros-kinetic-ackermann-msgs ros-kinetic-joy
 #navigate to home directory 
 WORKDIR home
+
+#install range_libc
+COPY range_libc range_libc
+WORKDIR range_libc/pywrapper
+#compile it without cuda for now
+RUN apt-get install -y python-pip && apt-get install -y python3-pip && pip install cython && python setup.py install
+WORKDIR ..
+WORKDIR ..
+
+
+
 RUN mkdir -p catkin_ws/src 
 WORKDIR catkin_ws
 #intialize the workspace
