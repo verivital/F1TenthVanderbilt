@@ -44,22 +44,6 @@ The simulation packages in this repository contain code to run a car autonomousl
 
 ##### You will need to install the following ROS packages to get the simulator to work
 
-#### Docker
-```docker build -t ros_test .```
-
-```docker container run --rm --runtime=nvidia -it -e DISPLAY  --env="QT_X11_NO_MITSHM=1" -v /tmp/.X11-unix:/tmp/.X11-unix -d ros_test```
-
-```xhost +local:root``` **this is not secure**
-
-Simple way to run everything:
-
-```docker build -t ros_test .```
-
-```docker-compose up```
-
-
-**When you are done run :** ```xhost -local:root ```
-
 #### Local Install
 Assuming you have ROS and Gazebo installed run: 
 
@@ -75,7 +59,7 @@ This will start Gazebo, [RViz](http://wiki.ros.org/rviz) and ROS. At a high leve
 
 ![Simulation Image](./images/simulator.png "Simulation Image")
 
-#### Import ROS Nodes
+#### Important ROS Nodes
 - [/keyboard_node](https://github.com/verivital/F1TenthVanderbilt/blob/master/f110-fall2018-skeletons/simulator/f1_10_sim/race/scripts/keyboard.py): allows you to drive the car using the keys w-a-s-d
 - [/sim_connector_node](https://github.com/verivital/F1TenthVanderbilt/blob/master/f110-fall2018-skeletons/simulator/f1_10_sim/race/scripts/sim_connector.py): translates keyboard commands into control inputs for the car. These commands are then published on the topic ```/vesc/ackermann_cmd_mux/input/teleop```
 - [/message_to_tf](https://github.com/verivital/F1TenthVanderbilt/blob/master/f110-fall2018-skeletons/simulator/f1_10_sim/race/scripts/message_to_tf.py): creates an odometric frame for the car so that the transformation tree in ROS is completer
@@ -90,6 +74,22 @@ This will start Gazebo, [RViz](http://wiki.ros.org/rviz) and ROS. At a high leve
 
 #### Changing the track
 To change the track utilized in the simulation change value parameter at the top of [f1_tenth.launch](https://github.com/verivital/F1TenthVanderbilt/blob/master/f110-fall2018-skeletons/simulator/f1_10_sim/race/launch/f1_tenth.launch) ```<arg name="world_name" value="track_porto"/>``` to one of the names listed in the racecar_gazebo/worlds directory as mentioned above.
+
+#### Docker
+```docker build -t ros_test .```
+
+```docker container run --rm --runtime=nvidia -it -e DISPLAY  --env="QT_X11_NO_MITSHM=1" -v /tmp/.X11-unix:/tmp/.X11-unix -d ros_test```
+
+```xhost +local:root``` **this is not secure**
+
+Simple way to run everything:
+
+```docker build -t ros_test .```
+
+```docker-compose up```
+
+
+**When you are done run :** ```xhost -local:root ```
 
 #### Strategy 1: Hallway simulation using teb planner, amcl, map built from gmapping:
 ```roslaunch wall_following move_base.launch```
