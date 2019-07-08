@@ -100,17 +100,25 @@ Run the particle filter:
 Run pure pursuit
 ```roslaunch a_stars_pure_pursuit pure_pursuit_sim.launch  ```
 
-#Docker
+# Docker
+
+Install [NVIDIA-Docker](https://github.com/NVIDIA/nvidia-docker) to containerize and run GPU accelerated workloads. In order to run the simulation please install it. 
+
+Additionally we make use of [Docker-Compose](https://docs.docker.com/compose/install/)  to define and run the simulation. Kindly install this as well. 
+
+To build the docker image
 ```docker build -t ros_test .```
 
-```docker container run --rm --runtime=nvidia -it -e DISPLAY  --env="QT_X11_NO_MITSHM=1" -v /tmp/.X11-unix:/tmp/.X11-unix -d ros_test```
+Test if the image builds correctly by running: ```docker container run --rm --runtime=nvidia -it -e DISPLAY  --env="QT_X11_NO_MITSHM=1" -v /tmp/.X11-unix:/tmp/.X11-unix -d ros_test```
 
-```xhost +local:root``` **this is not secure**
-**When you are done run :** ```xhost -local:root ```
+In order to  enable the use of graphical user interfaces within Docker containers such as Gazebo and Rviz run the following command: 
 
-Simple way to run everything:
+```xhost +local:root``` 
 
-```docker build -t ros_test .```
+ This command allows one to connect a container to a host's X server for display **but it is not secure.** It compromises the access control to X server on your host. So with a little effort, someone could display something on your screen, capture user input, in addition to making it easier to exploit other vulnerabilities that might exist in X.
+ 
+**So When you are done run :** ```xhost -local:root ``` to return the access controls that were disabled with the previous command.
+
 
 To run the pure-pursuit simulation:
 
