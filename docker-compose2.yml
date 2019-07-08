@@ -25,7 +25,10 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ros-logs:/root/.ros/
+      - ./f110-fall2018-skeletons:/home/catkin_ws/src/f110-fall2018-skeletons
       - ./a_stars_pure_pursuit:/home/catkin_ws/src/a_stars_pure_pursuit
+      - ./hector_slam:/home/catkin_ws/src/hector_slam
+      - ./particle_filter:/home/catkin_ws/src/particle_filter
       - gazebo-files:/root/.gazebo/
     command: /bin/bash -c 'source devel/setup.bash && roslaunch wall_following docker.launch'
   
@@ -44,7 +47,7 @@ services:
       - "ROS_MASTER_URI=http://rosmaster:11311" 
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
-      - ./a_stars_pure_pursuit:/home/catkin_ws/src/a_stars_pure_pursuit
+      - ./f110-fall2018-skeletons:/home/catkin_ws/src/f110-fall2018-skeletons
     command: /bin/bash -c 'source devel/setup.bash && roslaunch race docker_rviz.launch'
   
   #launch keyboard node
