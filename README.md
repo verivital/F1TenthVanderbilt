@@ -75,33 +75,10 @@ This will start Gazebo, [RViz](http://wiki.ros.org/rviz) and ROS. At a high leve
 #### Changing the track
 To change the track utilized in the simulation change value parameter at the top of [f1_tenth.launch](https://github.com/verivital/F1TenthVanderbilt/blob/master/f110-fall2018-skeletons/simulator/f1_10_sim/race/launch/f1_tenth.launch) ```<arg name="world_name" value="track_porto"/>``` to one of the names listed in the racecar_gazebo/worlds directory as mentioned above.
 
-#### Docker
-```docker build -t ros_test .```
-
-```docker container run --rm --runtime=nvidia -it -e DISPLAY  --env="QT_X11_NO_MITSHM=1" -v /tmp/.X11-unix:/tmp/.X11-unix -d ros_test```
-
-```xhost +local:root``` **this is not secure**
-
-Simple way to run everything:
-
-```docker build -t ros_test .```
-
-To run the pure-pursuit simulation:
-
-```docker-compose up```
-
-To run the teb planner simulation: 
-
-```docker-compose -f docker-compose2.yml up```
-
-To teleoperate the car:
-
-```docker container exec -it keyboard bash ```
-
-Then run: ```source devel/setup.bash && rosrun race keyboard.py ```
 
 
-**When you are done run :** ```xhost -local:root ```
+
+
 
 #### Strategy 1: Hallway simulation using teb planner, amcl, map built from gmapping:
 ```roslaunch wall_following move_base.launch```
@@ -123,6 +100,30 @@ Run the particle filter:
 Run pure pursuit
 ```roslaunch a_stars_pure_pursuit pure_pursuit_sim.launch  ```
 
+#Docker
+```docker build -t ros_test .```
 
+```docker container run --rm --runtime=nvidia -it -e DISPLAY  --env="QT_X11_NO_MITSHM=1" -v /tmp/.X11-unix:/tmp/.X11-unix -d ros_test```
+
+```xhost +local:root``` **this is not secure**
+**When you are done run :** ```xhost -local:root ```
+
+Simple way to run everything:
+
+```docker build -t ros_test .```
+
+To run the pure-pursuit simulation:
+
+```docker-compose up```
+
+To run the teb planner simulation: 
+
+```docker-compose -f docker-compose2.yml up```
+
+To teleoperate the car:
+
+```docker container exec -it keyboard bash ```
+
+Then run: ```source devel/setup.bash && rosrun race keyboard.py ```
 
 
