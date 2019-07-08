@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<launch>
+
+ 
+ <!--launch simulation-->
+  <include file="$(find racecar_gazebo)/launch/racecar.launch">
+	<arg name="world_name" value="track_levine"/>
+  </include>
+ <!--- start up sim-connector for keyboard, twist_to_ackermann for teb--> 
+    <node pkg="wall_following" name="sim_connector_node" type="sim_connector.py" output="screen"/>
+    <node pkg="wall_following" name="twist_to_ackermann" type="twist_to_ackermann_teb.py" output="screen"/>
+
+ <!-- load the map files-->
+  <arg    name="map_file"    default="$(find    race)/maps/mymap2.yaml"/>    
+  <node    name="map_server"    pkg="map_server"    type="map_server"    args="$(arg    map_file)"    />  
+  <node    name="message_to_tf"    pkg="wall_following"    type="message_to_tf.py"/>  
+ <!--run amcl-->
+  <include file="$(find race)/launch/amcl.launch"/>
+
+   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    
+    <rosparam file="$(find wall_following)/cfg/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
+    <rosparam file="$(find wall_following)/cfg/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find wall_following)/cfg/local_costmap_param.yaml" command="load" />
+    <rosparam file="$(find wall_following)/cfg/global_costmap.yaml" command="load" /> 
+    <rosparam file="$(find wall_following)/cfg/base_local_planner_params.yaml" command="load" />
+
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    <param name="controller_frequency" value="15.0" />
+ </node>
+</launch> 

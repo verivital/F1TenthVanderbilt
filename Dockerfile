@@ -36,7 +36,7 @@ RUN apt-get update && apt-get install -y ros-kinetic-desktop-full && rosdep upda
 
 
 #install some ros packages we are gonna need
-RUN apt-get update && apt-get install -y ros-kinetic-driver-base ros-kinetic-ros-control ros-kinetic-ros-controllers ros-kinetic-gazebo-ros-control ros-kinetic-ackermann-msgs ros-kinetic-joy
+RUN apt-get update && apt-get install -y ros-kinetic-driver-base  ros-kinetic-navigation ros-kinetic-ros-control ros-kinetic-teb-local-planner ros-kinetic-move-base ros-kinetic-ros-controllers ros-kinetic-gazebo-ros-control ros-kinetic-ackermann-msgs ros-kinetic-joy
 #navigate to home directory 
 WORKDIR home
 

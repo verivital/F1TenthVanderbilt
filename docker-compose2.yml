@@ -27,7 +27,7 @@ services:
       - ros-logs:/root/.ros/
       - ./a_stars_pure_pursuit:/home/catkin_ws/src/a_stars_pure_pursuit
       - gazebo-files:/root/.gazebo/
-    command: /bin/bash -c 'source devel/setup.bash && roslaunch race docker.launch'
+    command: /bin/bash -c 'source devel/setup.bash && roslaunch wall_following docker.launch'
   
   rviz:
     image: ros_test
@@ -37,7 +37,6 @@ services:
     depends_on:
       - "rosmaster"
       - "f1tenth"
-      - "particle_filter"
     environment:
       - DISPLAY
       - QT_X11_NO_MITSHM=1
@@ -62,37 +61,7 @@ services:
       - "ROS_HOSTNAME=keyboard"
       - "ROS_MASTER_URI=http://rosmaster:11311"
     command: /bin/bash -c 'source devel/setup.bash && bash' #&& rosrun race keyboard.py'
-
-  #launch the particle filter container
-  wall_following:
-    image: ros_test
-    build: . 
-    container_name: particle_filter
-    depends_on: 
-      - "rosmaster"
-      - "f1tenth"
-    environment:
-      - "ROS_HOSTNAME=particle_filter"
-      - "ROS_MASTER_URI=http://rosmaster:11311"
-    command: /bin/bash -c 'source devel/setup.bash && roslaunch particle_filter localize.launch'
   
-  #launch the the pure pursuit algorithm
-  pure_pursuit:
-    image: ros_test
-    build: .
-    container_name: pure_pursuit
-    depends_on: 
-      - "particle_filter"
-      - "f1tenth"
-      - "rviz"
-    environment:
-      - "ROS_HOSTNAME=pure_pursuit"
-      - "ROS_MASTER_URI=http://rosmaster:11311"
-    command: /bin/bash -c 'source devel/setup.bash && roslaunch a_stars_pure_pursuit pure_pursuit_sim.launch'
-    
-
-  
-
 volumes:
   ros-logs:
   gazebo-files:
