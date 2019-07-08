@@ -64,7 +64,7 @@ services:
     command: /bin/bash -c 'source devel/setup.bash && bash' #&& rosrun race keyboard.py'
 
   #launch the particle filter container
-  particle_filter:
+  wall_following:
     image: ros_test
     build: . 
     container_name: particle_filter
