@@ -86,7 +86,19 @@ Simple way to run everything:
 
 ```docker build -t ros_test .```
 
+To run the pure-pursuit simulation:
+
 ```docker-compose up```
+
+To run the teb planner simulation: 
+
+```docker-compose -f docker-compose2.yml up```
+
+To teleoperate the car:
+
+```docker container exec -it keyboard bash ```
+
+Then run: ```source devel/setup.bash && rosrun race keyboard.py ```
 
 
 **When you are done run :** ```xhost -local:root ```
