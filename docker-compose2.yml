@@ -32,6 +32,7 @@ services:
       - gazebo-files:/root/.gazebo/
     command: /bin/bash -c 'source devel/setup.bash && roslaunch wall_following docker.launch'
   
+  #create a seperate container for the rviz simulations
   rviz:
     image: ros_test
     build: .
@@ -63,8 +64,9 @@ services:
     environment:
       - "ROS_HOSTNAME=keyboard"
       - "ROS_MASTER_URI=http://rosmaster:11311"
-    command: /bin/bash -c 'source devel/setup.bash && bash' #&& rosrun race keyboard.py'
+    command: /bin/bash -c 'source devel/setup.bash && bash'
   
+#declare names for the gazebo log files and ros log files which will be handled by docker
 volumes:
   ros-logs:
   gazebo-files:
