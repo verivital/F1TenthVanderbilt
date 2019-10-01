@@ -22,7 +22,7 @@ class DisparityExtenderDriving(object):
         # This is actually "half" of the car width, plus some tolerance.
         # Controls the amount disparities are extended by.
 
-        self.car_width = 0.25#0.50
+        self.car_width = 0.50#0.50
 
         # This is the difference between two successive LIDAR scan points that
         # can be considered a "disparity". (As a note, at 7m there should be
@@ -92,13 +92,15 @@ class DisparityExtenderDriving(object):
 
     
 
-    """This function computes which direction we should be targeting"""
-    def calculate_target_distance(self,arr):
-        if(len(arr)==1):
-            return arr[0]
-        else:
-            mid=int(len(arr)/2)
-            return arr[mid]
+
+
+    """Function that publishes the speed and angle so that the car drives around the track"""
+    def publish_speed_and_angle(self,angle):
+        msg = drive_param()
+        msg.angle = angle
+        msg.velocity = 0.5
+        self.pub_drive_param.publish(msg)
+
 
     """ Main function callback for the car"""
     def lidar_callback(self,data):
@@ -126,7 +128,37 @@ class DisparityExtenderDriving(object):
         target_distances=np.where(new_ranges>=max_value)[0]
         
         driving_distance=self.calculate_target_distance(target_distances)
-        print(driving_distance,max_value,new_ranges[driving_distance])
+        driving_angle=self.calculate_angle(driving_distance)
+        thresholded_angle=self.threshold_angle(driving_angle)
+        print("Max Value:",max_value)
+        print("Driving Distance Index:",driving_distance,"Computed Angle:",driving_angle,"Thresholded Angle:",thresholded_angle,"Distance at that angle:",new_ranges[driving_distance])
+        self.publish_speed_and_angle(thresholded_angle)
+
+
+    """This function returns the angle we are targeting depending on which index corresponds to the farthest distance"""
+    def calculate_angle(self,index):
+        angle=(index-540)/4.0
+        rad=(angle*math.pi)/180
+        print(angle,rad)
+        return rad
+
+    "Threshold the angle if it's larger than 35 degrees"
+    def threshold_angle(self,angle):
+        max_angle_radians=35*(math.pi/180)
+        if angle<(-max_angle_radians):
+            return -max_angle_radians
+        elif angle>max_angle_radians:
+            return max_angle_radians
+        else:
+            return angle
+    
+    """This function computes which direction we should be targeting"""
+    def calculate_target_distance(self,arr):
+        if(len(arr)==1):
+            return arr[0]
+        else:
+            mid=int(len(arr)/2)
+            return arr[mid]
 
     """ Scans each pair of subsequent values, and returns an array of indices
         where the difference between the two values is larger than the given
@@ -201,7 +233,7 @@ class DisparityExtenderDriving(object):
                         current_index += 1
                     else:
                         current_index -= 1
-            return ranges
+        return ranges
 
 if __name__ == '__main__':
     rospy.init_node('disparity_extender', anonymous=True)

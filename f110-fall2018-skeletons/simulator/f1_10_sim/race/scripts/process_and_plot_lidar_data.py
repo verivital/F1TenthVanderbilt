@@ -59,7 +59,7 @@ def find_disparities(arr,threshold):
 
 
 """Computes the target angle to drive at"""
-def sample_disance(arr):
+def sample_distance(arr):
     if(len(arr)==1):
         return arr[0]
     else:
@@ -120,6 +120,24 @@ def extend_disparities(arr,disparity_indices,car_width):
                     current_index -= 1
         return ranges
 
+"""This function returns the angle we are targeting depending on which index corresponds to the farthest distance"""
+def calculate_angle(index):
+    angle=(540-index)/4.0
+    rad=(angle*math.pi)/180
+    print(angle,rad)
+    return rad
+
+"Threshold the angle if it's larger than 35 degrees"
+def threshold_angle(angle):
+    max_angle_radians=35*(math.pi/180)
+    if angle<(-max_angle_radians):
+        return -max_angle_radians
+    elif angle>max_angle_radians:
+        return max_angle_radians
+    else:
+        return angle
+
+
 
 
 def lidar_callback(data):
@@ -138,7 +156,7 @@ def lidar_callback(data):
     limited_ranges[indices]=(data.range_max)-0.1
 
     #calculate the disparities between samples
-    threshold=0.3
+    threshold=0.50
     car_width=0.25
     disparities=find_disparities(limited_ranges,threshold)
     
@@ -153,8 +171,11 @@ def lidar_callback(data):
     max_value=max(new_scan.ranges)
     target_distances=np.where(new_ranges>=max_value)[0]
     
-    driving_distance=sample_disance(target_distances)
-    print(driving_distance,max_value,new_ranges[driving_distance])
+    driving_distance=sample_distance(target_distances)
+    driving_angle=calculate_angle(driving_distance)
+    thresholded_angle=threshold_angle(driving_angle)
+    print("Max Value:",max_value)
+    print("Driving Distance Index:",driving_distance,"Computed Angle:",driving_angle,"Thresholded Angle:",thresholded_angle,"Distance at that angle:",new_ranges[driving_distance])
     pub.publish(new_scan)
     
 
