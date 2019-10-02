@@ -1,8 +1,0 @@
-prefix=/home/nvidia/racecar-ws/install
-
-Name: racecar
-Description: Description of racecar
-Version: 0.0.1
-Cflags: -I/home/nvidia/racecar-ws/install/include
-Libs: -L/home/nvidia/racecar-ws/install/lib 
-Requires: razor_imu_9dof tf tf2_ros urg_node joy joy_teleop laser_scan_matcher rosbag rostopic rviz gmapping hector_mapping robot_pose_ekf

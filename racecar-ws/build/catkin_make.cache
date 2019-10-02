@@ -1,2 +1,0 @@
-racecar-controllers/racecar_controllers:racecar-controllers/racecar_potential_field_controller:racecar-controllers/racecar_safety_controller:racecar/ackermann_cmd_mux:racecar/racecar:racecar/sparkfun_9dof_razor_imu_m0:vesc/vesc:vesc/vesc_ackermann:vesc/vesc_driver:vesc/vesc_msgs
--DCATKIN_DEVEL_PREFIX=/home/nvidia/racecar-ws/devel -DCMAKE_INSTALL_PREFIX=/home/nvidia/racecar-ws/install -G Unix Makefiles

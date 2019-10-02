@@ -7,21 +7,23 @@
   <arg name="config_path" default="$(find racecar_potential_field_controller)/config/$(arg config).yaml" />
   <arg name="run_viz" default="false"/>
 
-  <group if="$(arg run_teleop)">
+<!--  <group if="$(arg run_teleop)">
     <include file="$(find racecar)/launch/teleop.launch">
       <arg name="racecar_version" value="$(arg racecar_version)" />
       <arg name="run_camera" value="$(arg run_camera)" />
     </include>
-  </group>
+  </group> -->
 
   <node pkg="racecar_potential_field_controller" type="node" name="potential_field_controller" output="screen">
-    <remap from="navigation" to="/ackermann_cmd_mux/input/navigation" />
+    <!--<remap from="navigation" to="/ackermann_cmd_mux/input/navigation" /> Commented out by dieman95 -->
+    <remap from="navigation" to="ackermann_cmd_mux/input/teleop" /> <!-- Added by dieman95 -->
+    <!--<remap from="navigation" to="drive_parameters" />  Send commands to sim_connector  -->
     <rosparam file="$(arg config_path)" command="load" />
   </node>
 
-  <group if="$(arg run_viz)">
+<!--  <group if="$(arg run_viz)">
     <include file="$(find racecar_potential_field_controller)/launch/viz.launch">
     </include>
-  </group>
+  </group> -->
 
 </launch>

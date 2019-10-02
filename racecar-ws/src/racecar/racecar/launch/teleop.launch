@@ -2,11 +2,11 @@
 <launch>
   <arg name="racecar_version" default="$(optenv RACECAR_VERSION racecar-v2)" doc="system version [racecar-v1, racecar-v2]" />
   <arg name="imu_model" default="$(optenv RACECAR_IMU razor_imu_m0)" doc="imu sensor types [razor_imu, razor_imu_m0]" />
-  <arg name="run_camera" default="false"/>
+  <arg name="run_camera" default="true"/>
 
   <include file="$(find racecar)/launch/includes/$(arg racecar_version)-teleop.launch.xml">
     <arg name="imu_model" value="$(arg imu_model)" />
     <arg name="run_camera" value="$(arg run_camera)" />
   </include>
-
+ <include file="$(find zed_wrapper)/launch/zed_camera.launch"/>
 </launch>

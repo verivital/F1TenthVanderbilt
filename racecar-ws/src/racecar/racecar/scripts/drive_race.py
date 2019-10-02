@@ -8,7 +8,7 @@ import numpy as np
 
 pi = math.pi
 angle = 0.0
-vel = 2.5
+vel = 0.5
 
 pub = rospy.Publisher('drive_parameters', drive_param, queue_size=1)
 
@@ -25,7 +25,7 @@ def preprocessLidar(data):
 
 def wheeler(data):
 	print 'Can we go straight?'
-	distance = 0.8
+	distance = 0.7 #1.2
 	mid = int(len(data.ranges)/2)
 	if all(i >= distance for i in data.ranges[mid-16:mid+15]):
 		print 'Please continue your easy driving'
@@ -74,7 +74,7 @@ def detect_walls(data,angle):
 	newdata = data.ranges[180:-180]
 	leftdist = min(newdata[-11:-1])
 	rightdist = min(newdata[0:10])
-	dist = 0.35
+	dist = 0.2
 	if leftdist < dist:
 		if rightdist > dist:
 			print 'Left wall is very close', leftdist
@@ -100,11 +100,11 @@ def threshold(angle):
 
 def speed(angle):
 	if abs(angle) > 0.2:
-		return 0.7
+		return  0.7#1.6 #was 1.3
 	elif abs(angle) > 0.45:
-		return 0.3
+		return  0.5 #1 # was 0.8
 	else:
-		return 1.0
+		return  0.8  #2.5 # was 2.5
 	
 
 def callback(data):
@@ -118,7 +118,7 @@ def callback(data):
 	angle = detect_walls(data,angle)
 	angle = threshold(angle)
 	vel = speed(angle)
-	angle = angle - 1.75*pi/180
+	angle = angle + 2.00*pi/180  #Offset appears to be fixed
 	#print 'Is error same?', error
 	print 'Desired angle we would like to turn to ', angle*180/pi
 	msg = drive_param()

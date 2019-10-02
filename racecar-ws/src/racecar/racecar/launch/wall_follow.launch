@@ -12,6 +12,8 @@
   <node name="sim_connector" pkg="racecar" type="sim_connector.py" output="screen" />
  <!-- <node name="levine_demo" pkg="racecar" type="levineDemo.py" output="screen" />-->
  <!-- <node name="control" pkg="racecar" type="control.py" output="screen" />-->
-  <!--<node name="key_board" pkg="racecar" type="keyboard.py" output="screen" />-->
+<!--  <node name="Angle_NN" pkg="racecar" type="keyboard.py" output="screen" />
+  <include file="$(find zed_wrapper)/launch/zed_camera.launch"/>
+  <include file="$(find racecar)/launch/robot_pose_ekf.launch"/>-->
 
 </launch>

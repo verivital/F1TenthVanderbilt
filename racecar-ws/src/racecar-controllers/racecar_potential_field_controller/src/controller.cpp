@@ -1,5 +1,5 @@
 // -*- mode:c++; fill-column: 100; -*-
-
+#include <ros/ros.h>
 #include "racecar_potential_field_controller/controller.h"
 
 #include <algorithm>
@@ -22,22 +22,25 @@ visualization_msgs::Marker lines(visualization_msgs::Marker viz, int skip,
                                  const Eigen::ArrayXf& points_x, const Eigen::ArrayXf& points_y,
                                  const Eigen::ArrayXf& forces_x, const Eigen::ArrayXf& forces_y);
 visualization_msgs::Marker text(visualization_msgs::Marker viz, double x, double y, std::string text);
-
+/*
+ force_scale_x_(0.07), force_scale_y_(0.07) were the original values and have been modified for experiment purposes 
+*/
 Controller::Controller(ros::NodeHandle nh,
 		       ros::NodeHandle private_nh) :
   force_scale_x_(0.07), force_scale_y_(0.07), force_offset_x_(100), force_offset_y_(0),
-  speed_p_gain_(0.05), steering_p_gain_(1.0), steering_d_gain_(0.1), viz_forces_scale_(0.07),
+  speed_p_gain_(0.1), steering_p_gain_(1.0), steering_d_gain_(0.1), viz_forces_scale_(0.07),
   viz_net_force_scale_(0.014), force_angle_last_(0.0)
 {
   // dynamic parameters
   dynamic_param_server_.setCallback(boost::bind(&Controller::paramCallback, this, _1, _2));
 
   // create velocity publisher
-  vel_pub_ = nh.advertise<ackermann_msgs::AckermannDriveStamped>("navigation", 10);
-  viz_pub_ = nh.advertise<visualization_msgs::MarkerArray>("/visualization_marker_array", 10);
+  vel_pub_ = nh.advertise<ackermann_msgs::AckermannDriveStamped>("navigation", 2);
+  //vel_pub_ = nh.advertise<race::drive_param>("navigation", 2);
+  viz_pub_ = nh.advertise<visualization_msgs::MarkerArray>("/visualization_marker_array", 2);
 
   // subscribe to laser scanner
-  scan_sub_ = nh.subscribe("/scan", 10, &Controller::scanCallback, this);
+  scan_sub_ = nh.subscribe("/scan", 2, &Controller::scanCallback, this);
 
   // create a 40Hz timer for setting commands
   timer_ = nh.createTimer(ros::Duration(1.0/40.0), &Controller::timerCallback, this);
@@ -61,8 +64,9 @@ void Controller::timerCallback(const ros::TimerEvent& event)
 {
   static bool updating(false);
   ackermann_msgs::AckermannDriveStamped::Ptr cmd(new ackermann_msgs::AckermannDriveStamped);
+  //race::drive_param::Ptr cmd(new race::drive_param);
 
-  if (ros::Time::now() - last_cmd_.header.stamp > ros::Duration(0.1)) {
+  if (ros::Time::now() - last_cmd_.header.stamp > ros::Duration(0.08)) {
     if (updating) {
       ROS_WARN("racecar_potential_field_controller not updating navigation command");
       updating = false;
@@ -103,22 +107,32 @@ void Controller::scanCallback(const sensor_msgs::LaserScan::ConstPtr& scan)
   Eigen::ArrayXf angles_cos(angles.cos());
   Eigen::ArrayXf angles_sin(angles.sin());
   Eigen::ArrayXf forces_x(angles_cos/neg_ranges_2);
-  Eigen::ArrayXf forces_y(angles_sin/neg_ranges_2);
+  Eigen::ArrayXf forces_y(5.0*angles_sin/neg_ranges_2);
   Eigen::ArrayXf points_x(ranges * angles_cos);
   Eigen::ArrayXf points_y(ranges * angles_sin);
   float net_force_x = force_scale_x_ * forces_x.sum() + force_offset_x_;
   float net_force_y = force_scale_y_ * forces_y.sum() + force_offset_y_;
+  net_force_y += (net_force_y < 0 ? -1.0 : 1.0) * force_offset_y_;
 
   double force_angle = atan2(net_force_y, net_force_x);
-  if (fabs(force_angle) > 0.5) {
-    force_angle = (force_angle < 0 ? -1.0 : 1.0) * 0.5;
+  if (fabs(force_angle) > 0.155) {
+    force_angle = (force_angle < 0 ? -1.0 : 1.0) * 0.155;  //Original
   }
+   //Diego's change
+  /*if (fabs(force_angle) > 0.7) {
+    force_angle = (force_angle < 0 ? -1.0 : 1.0) * 0.7;
+  }*/
+ 
   last_cmd_.header.stamp = scan->header.stamp;
-  last_cmd_.drive.speed = speed_p_gain_ * sqrt(net_force_x*net_force_x + net_force_y*net_force_y);
-  if (net_force_x < 0)
-    last_cmd_.drive.speed *= -1;
+  last_cmd_.drive.speed = speed_p_gain_ * sqrt(net_force_x*net_force_x + net_force_y*net_force_y)/2.05;
   last_cmd_.drive.steering_angle = steering_p_gain_ * force_angle +
     steering_d_gain_ * (force_angle - force_angle_last_);
+	
+  if (net_force_x < 0){
+    last_cmd_.drive.speed *= -1;
+	// Code should help wtih backing up
+	last_cmd_.drive.steering_angle *= -1;
+  }
 
   // set force_angle_last_ for use in derivative term on next iteration
   // (note: there are better approximations for derivative)
