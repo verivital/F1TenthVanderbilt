@@ -41,7 +41,7 @@ class DisparityExtenderDriving(object):
         # This is the radius to the left or right of the car that must be clear
         # when the car is attempting to turn left or right.
 
-        self.turn_clearance = 0.30
+        self.turn_clearance = 0.35
 
         # This is the maximum steering angle of the car, in degrees.
 
@@ -93,12 +93,36 @@ class DisparityExtenderDriving(object):
     
 
 
+    """function that make sure we don't turn too sharply and collide with a wall
+        TODO figure out if we really need to look at all 45 degrees
+        """
+    def adjust_turning_for_safety(self,left_distances,right_distances,angle):
+        min_left=min(left_distances)
+        min_right=min(right_distances)
+
+        if min_left<=self.turn_clearance and angle>0.0:#.261799:
+            rospy.logwarn("Too Close Left: "+str(min_left))
+            angle=0.0
+        elif min_right<=self.turn_clearance and angle<0.0:#-0.261799:
+            rospy.logwarn("Too Close Right: "+str(min_right))
+            angle=0.0
+           
+        else:
+            angle=angle
+        return angle
+
+
+
+    """Function that sets the speed for the car """
+    def set_speeds(self,angle,ranges):
+        pass
+
 
     """Function that publishes the speed and angle so that the car drives around the track"""
     def publish_speed_and_angle(self,angle):
         msg = drive_param()
         msg.angle = angle
-        msg.velocity = 0.5
+        msg.velocity = 1.0
         self.pub_drive_param.publish(msg)
 
 
@@ -127,11 +151,25 @@ class DisparityExtenderDriving(object):
         max_value=max(new_ranges)
         target_distances=np.where(new_ranges>=max_value)[0]
         
+        #figure out which direction we should target based on the max distances we computed from disparities
         driving_distance=self.calculate_target_distance(target_distances)
         driving_angle=self.calculate_angle(driving_distance)
+
+        #threshold the angle we can turn as the maximum turn we can make is 35 degrees
         thresholded_angle=self.threshold_angle(driving_angle)
-        print("Max Value:",max_value)
-        print("Driving Distance Index:",driving_distance,"Computed Angle:",driving_angle,"Thresholded Angle:",thresholded_angle,"Distance at that angle:",new_ranges[driving_distance])
+
+        #TODO: Delete these debug comments
+        #print("Max Value:",max_value)
+        #print("Driving Distance Index:",driving_distance,"Computed Angle:",driving_angle,"Thresholded Angle:",thresholded_angle,"Distance at that angle:",new_ranges[driving_distance])
+
+        #look at the data behind the car to make sure that if we are too close to the wall we don't turn
+        behind_car=np.asarray(data.ranges)
+        
+        #the lidar sweeps counterclockwise so right is [0:180] and left is [901:]
+        behind_car_right=behind_car[0:180]
+        behind_car_left=behind_car[901:]
+        #change the steering angle based on whether we are safe
+        thresholded_angle=self.adjust_turning_for_safety(behind_car_left,behind_car_right,thresholded_angle)
         self.publish_speed_and_angle(thresholded_angle)
 
 
@@ -139,7 +177,7 @@ class DisparityExtenderDriving(object):
     def calculate_angle(self,index):
         angle=(index-540)/4.0
         rad=(angle*math.pi)/180
-        print(angle,rad)
+        #print(angle,rad)
         return rad
 
     "Threshold the angle if it's larger than 35 degrees"
