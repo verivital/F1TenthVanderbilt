@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="racecar" xmlns:xacro="http://www.ros.org/wiki/xacro"><!--Can't be forgetting to change the car name here -->
+<robot name="racecar2" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 <!-- Gazebo references -->
 
@@ -8,7 +8,7 @@
   <mu2 value="0.0"/>
   <kp  value="10000000.0" />
   <kd  value="1.0" />
-  <material>Gazebo/Red</material><!--Gotta change the car color here-->
+  <material>Gazebo/Blue</material>
 </gazebo>
 
 <gazebo reference="left_rear_wheel">
@@ -53,7 +53,7 @@
 
 <gazebo>
   <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-    <robotNamespace>/racecar</robotNamespace><!--Will need to change the robot name here-->
+    <robotNamespace>/racecar2</robotNamespace>
     <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
   </plugin>
 </gazebo>
@@ -68,7 +68,7 @@
       <visualize>true</visualize>
       <topic>__default_topic__</topic>
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-        <topicName>imu</topicName>
+        <topicName>imu2</topicName>
         <bodyName>imu_link</bodyName>
         <updateRateHZ>100.0</updateRateHZ>
         <gaussianNoise>0.0</gaussianNoise>
@@ -108,7 +108,7 @@
         </noise>
       </ray>
       <plugin name="gazebo_ros_hokuyo_controller" filename="libgazebo_ros_laser.so">
-        <topicName>/scan</topicName>
+        <topicName>/scan2</topicName>
         <frameName>laser</frameName>
       </plugin>
     </sensor>
@@ -141,9 +141,9 @@
       <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
         <alwaysOn>true</alwaysOn>
         <updateRate>30.0</updateRate>
-        <cameraName>/camera/zed</cameraName>
-        <imageTopicName>rgb/image_rect_color</imageTopicName>
-        <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+        <cameraName>/camera/racecar2/zed</cameraName>
+        <imageTopicName>racecar2/rgb/image_rect_color</imageTopicName>
+        <cameraInfoTopicName>/racecar2/rgb/camera_info</cameraInfoTopicName>
         <frameName>camera_link</frameName>
         <hackBaseline>0</hackBaseline><!-- set this to 0.12 for the second camera -->
         <distortionK1>0.0</distortionK1>
