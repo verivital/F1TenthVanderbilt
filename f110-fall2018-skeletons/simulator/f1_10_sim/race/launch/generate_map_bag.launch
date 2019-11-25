@@ -3,7 +3,7 @@
     <!--    Map    server    -->    
     <!--alread done in wall-following launch<arg    name="map_file"    default="$(find    race)/maps/mymap2.yaml"/>    
     <node    name="map_server"    pkg="map_server"    type="map_server"    args="$(arg    map_file)"    />-->
-    <node pkg="rosbag" type="play" name="player" output="screen" args="--clock /home/musaup/Documents/catkin_ws/src/f110-fall2018-skeletons/simulator/f1_10_sim/race/launch/bags/April_1_4.bag"/>
+    <node pkg="rosbag" type="play" name="player" output="screen" args="--clock /home/musaup/Documents/catkin_ws/src/f110-fall2018-skeletons/simulator/f1_10_sim/race/launch/bags/April_6_3.bag"/>
     <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_laser" args="0.285 0.0 0.127 0.0 0.0 0.0 1.0 /base_link /laser"/>
     <!--<node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 map odom 100"/>-->
     <!--<node pkg="race" type="base_link_to_laser_bag.py" name="base_link_to_laser" output="screen"/>-->

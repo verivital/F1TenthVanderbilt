@@ -15,7 +15,7 @@
     <arg name="gui" value="$(arg gui)"/>
   </include>
 
- 
+  
   <!-- urdf xml robot description loaded on the Parameter Server, converting the xacro into a proper urdf file-->
   <param name="robot_description" command="$(find xacro)/xacro '$(find racecar_description)/urdf/racecar2.xacro'" />
 
@@ -24,12 +24,26 @@
     -model is the name of the robot 
   
   -->
+  
   <node name="racecar_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model racecar2 -x -1.35 -y 0.05 -z 0.05" />
+  
+  <!-- Transforms This will end up being easier-->
 
-<!-- -->
+  <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0 0 0.05 0 0 0 base_link2 racecar2/chassis 100" />
+  <node pkg="tf" type="static_transform_publisher" name="link2_broadcaster" args="0.265 0.0 0.075 0 0 0 racecar2/chassis racecar2/laser 100" />
+  <node pkg="tf" type="static_transform_publisher" name="link3_broadcaster" args="0.1 0 0.035 0 0 0 racecar2/chassis racecar2/imu_joint 100" />
+  <node pkg="tf" type="static_transform_publisher" name="link4_broadcaster" args="0.390 0 0.04 0 0 0 racecar2/chassis racecar2/camera 100" />
+
+  
+
+
 
   <!-- ros_control racecar launch file -->
   <include file="$(find racecar_control)/launch/racecar_control2.launch" ns="/"/>
+  
+  
+
+
 
   <!-- Spawn the MUXs-->
   <arg name="racecar_version" default="racecar-v2" />

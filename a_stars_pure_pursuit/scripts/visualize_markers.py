@@ -5,15 +5,20 @@ from visualization_msgs.msg import Marker
 from visualization_msgs.msg import MarkerArray
 import rospy
 import math
-
+import rospkg
 import os
 import csv
 import pdb
 
-dirname = os.path.dirname(__file__)
-dir_path=os.path.dirname(os.path.realpath(__file__))
-filename=dir_path+'/pure-pursuit-wp-2019-04-07-22-39-51.csv'
+
+# get an instance of RosPack with the default search paths
+rospack = rospkg.RosPack()
+#get the path for this paackage
+package_path=rospack.get_path('a_stars_pure_pursuit')
+
+#filename='/home/musaup/Documents/catkin_ws/src/f110-fall2018-skeletons/labs/wall_following/logs/pure-pursuit-wp-2019-04-07-22-39-51.csv'
 #filename='/home/musaup/Documents/catkin_ws/src/f110-fall2018-skeletons/labs/wall_following/logs/pure-pursuit-wp-2019-04-08-02-28-24.csv'
+filename=package_path+'/waypoints/waypoints_1.csv'
 with open(filename) as f:
 	path_points = [tuple(line) for line in csv.reader(f)]
 

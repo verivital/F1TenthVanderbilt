@@ -9,8 +9,11 @@
     <!--define the names here so that when we generalize it will be easier-->
   </include>
 
-  <!-- This node does the passing of the messages to the correct ackermann command
-  <node name="message_to_tf" pkg="wall_following" type="message_to_tf.py"/>-->
+  <!-- This node does the passing of the messages to the correct ackermann command-->
+  <node name="message_to_tf" pkg="wall_following" type="message_to_tf.py"/>
+
+  <!-- This node does the passing of the messages to the correct ackermann command-->
+  <node name="message_to_tf2" pkg="race" type="message_to_tf2.py"/>
 
   <!--Sim connector and keyboard node for the second car -->
   <node pkg="race" name="sim_connector_node2" type="sim_connector2.py"/>
@@ -20,7 +23,7 @@
   <node pkg="race" name="sim_connector_node" type="sim_connector.py"/>
 
 
-  
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find race)/cfg/multicar.rviz"/>
 
   <!--This publishes the initial poistion of the the car 
   <node pkg="rostopic" type="rostopic" name="rostopic" args="pub initialpose geometry_msgs/PoseWithCovarianceStamped '

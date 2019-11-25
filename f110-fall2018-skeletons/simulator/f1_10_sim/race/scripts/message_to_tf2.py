@@ -31,8 +31,8 @@ def vesc_odom_callback(data):
 
     odom_trans=TransformStamped()
     odom_trans.header.stamp=currentTime
-    odom_trans.header.frame_id="odom"
-    odom_trans.child_frame_id="base_link"
+    odom_trans.header.frame_id="odom2"
+    odom_trans.child_frame_id="base_link2"
 
     #Odometry is the distance of something relative to a point. In our case it is the distance between the base link
     #and the fixed frame odom. Here we attach the odom frame to the map so the transform between odom and base_link 
@@ -58,7 +58,7 @@ def vesc_odom_callback(data):
                 frame_id="map",
                 stamp=currentTime
             ),
-            child_frame_id="odom",
+            child_frame_id="odom2",
             transform=Transform(
                 translation=pose2,
                 rotation=Quaternion(*tf.transformations.quaternion_from_euler(0,0,0))
@@ -73,7 +73,7 @@ def vesc_odom_callback(data):
 
 def vesc_odom_listener():
     rospy.init_node("message_to_tf",anonymous=True)
-    rospy.Subscriber("/vesc/odom",Odometry,vesc_odom_callback)
+    rospy.Subscriber("/vesc/odom2",Odometry,vesc_odom_callback)
     rospy.spin()
 
 if __name__=="__main__":

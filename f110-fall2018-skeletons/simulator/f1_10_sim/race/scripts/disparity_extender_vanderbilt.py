@@ -41,7 +41,7 @@ class DisparityExtenderDriving(object):
         # This is the radius to the left or right of the car that must be clear
         # when the car is attempting to turn left or right.
 
-        self.turn_clearance = 0.35
+        self.turn_clearance = 0.25
 
         # This is the maximum steering angle of the car, in degrees.
 
@@ -50,14 +50,14 @@ class DisparityExtenderDriving(object):
         # The slowest speed the car will go
         # Good value here is 0.1
 
-        self.min_speed = 1.0
+        self.min_speed = 0.37
 
         # The maximum speed the car will go (the absolute max for the motor is
         # 0.5, which is *very* fast). 0.15 is a good max for slow testing.
 
-        self.max_speed = 1.15 #.20
+        self.max_speed = 3.5 #.20
 
-        self.absolute_max_speed = 1.20 # 0.3
+        self.absolute_max_speed = 6.00 # 0.3
 
         # The forward distance at which the car will go its minimum speed.
         # If there's not enough clearance in front of the car it will stop.
@@ -68,6 +68,7 @@ class DisparityExtenderDriving(object):
         # Any distance between this and the minimum scales the speed linearly.
 
         self.max_distance = 3.0
+        self.absolute_max_distance=6.0
 
         # The forward distance over which the car will go its *absolute
         # maximum* speed. This distance indicates there are no obstacles in
@@ -90,40 +91,17 @@ class DisparityExtenderDriving(object):
         #store the value of 0.25 degrees in radians
         self.angle_step=(0.25)*(math.pi/180)
 
+        
+        #Experimental Section
+
+        self.coefficient_of_friction=0.62
+        self.wheelbase_width=0.328
+        self.gravity=9.81998#sea level
+
     
 
 
-    """function that make sure we don't turn too sharply and collide with a wall
-        TODO figure out if we really need to look at all 45 degrees
-        """
-    def adjust_turning_for_safety(self,left_distances,right_distances,angle):
-        min_left=min(left_distances)
-        min_right=min(right_distances)
-
-        if min_left<=self.turn_clearance and angle>0.0:#.261799:
-            rospy.logwarn("Too Close Left: "+str(min_left))
-            angle=0.0
-        elif min_right<=self.turn_clearance and angle<0.0:#-0.261799:
-            rospy.logwarn("Too Close Right: "+str(min_right))
-            angle=0.0
-           
-        else:
-            angle=angle
-        return angle
-
-
-
-    """Function that sets the speed for the car """
-    def set_speeds(self,angle,ranges):
-        pass
-
-
-    """Function that publishes the speed and angle so that the car drives around the track"""
-    def publish_speed_and_angle(self,angle):
-        msg = drive_param()
-        msg.angle = angle
-        msg.velocity = 1.0
-        self.pub_drive_param.publish(msg)
+   
 
 
     """ Main function callback for the car"""
@@ -153,6 +131,7 @@ class DisparityExtenderDriving(object):
         
         #figure out which direction we should target based on the max distances we computed from disparities
         driving_distance=self.calculate_target_distance(target_distances)
+        
         driving_angle=self.calculate_angle(driving_distance)
 
         #threshold the angle we can turn as the maximum turn we can make is 35 degrees
@@ -168,9 +147,81 @@ class DisparityExtenderDriving(object):
         #the lidar sweeps counterclockwise so right is [0:180] and left is [901:]
         behind_car_right=behind_car[0:180]
         behind_car_left=behind_car[901:]
+
         #change the steering angle based on whether we are safe
         thresholded_angle=self.adjust_turning_for_safety(behind_car_left,behind_car_right,thresholded_angle)
-        self.publish_speed_and_angle(thresholded_angle)
+        velocity=self.calculate_min_turning_radius(thresholded_angle,limited_ranges[540])
+        velocity=self.threshold_speed(velocity,new_ranges[driving_distance],new_ranges[540])
+
+        """Yeah nah this aint working for us: velocity=self.duty_cycle_from_distance(limited_ranges[540])
+        print(velocity)"""
+        self.publish_speed_and_angle(thresholded_angle,velocity)
+
+
+    """Scale the speed in accordance to the forward distance"""
+    def threshold_speed(self,velocity,forward_distance,straight_ahead_distance):
+        max_distance=3.0
+
+        
+        if straight_ahead_distance>self.absolute_max_distance:
+            velocity=self.absolute_max_speed
+        elif straight_ahead_distance>max_distance:
+            velocity=velocity
+        elif forward_distance<0.25:
+            velocity=-0.5
+        else:
+            velocity=(straight_ahead_distance/max_distance)*velocity 
+        if velocity<self.min_speed:
+                velocity=self.min_speed
+        rospy.loginfo("Chosen Distance: "+str(forward_distance)+", Velocity: "+str(velocity)+" straight ahead: "+str(straight_ahead_distance))
+        return velocity
+
+   
+    """function that make sure we don't turn too sharply and collide with a wall
+        TODO figure out if we really need to look at all 45 degrees
+        """
+    def adjust_turning_for_safety(self,left_distances,right_distances,angle):
+        min_left=min(left_distances)
+        min_right=min(right_distances)
+
+        if min_left<=self.turn_clearance and angle>0.0:#.261799:
+            rospy.logwarn("Too Close Left: "+str(min_left))
+            angle=0.0
+        elif min_right<=self.turn_clearance and angle<0.0:#-0.261799:
+            rospy.logwarn("Too Close Right: "+str(min_right))
+            angle=0.0
+           
+        else:
+            angle=angle
+        return angle
+
+
+    """This next section is experimental let's see what happens,
+    The idea here is to set the speed to be just under the maximum velocity you can take a turn with based on basic physics equations
+    It's rudimentary but its also a starting point, so far it works now I just need to figure out how to include some notion of forward distance
+    """
+    def calculate_min_turning_radius(self,angle,forward_distance):
+        angle=abs(angle)
+        if(angle<0.0872665):#if the angle is less than 5 degrees just go as fast possible
+            return self.max_speed
+        else:
+            turning_radius=(self.wheelbase_width/math.sin(angle))
+            maximum_velocity=math.sqrt(self.coefficient_of_friction*self.gravity*turning_radius)
+            if(maximum_velocity<self.max_speed):
+                maximum_velocity=maximum_velocity*(maximum_velocity/self.max_speed)
+            else:
+                maximum_velocity=4.0
+        #print("angle:",angle,"maximum_velocity:",maximum_velocity,"turning_radius:",turning_radius,'forward_distance:',forward_distance)
+        return maximum_velocity
+
+
+
+    """Function that publishes the speed and angle so that the car drives around the track"""
+    def publish_speed_and_angle(self,angle,speed):
+        msg = drive_param()
+        msg.angle = angle
+        msg.velocity = 1.0
+        self.pub_drive_param.publish(msg)
 
 
     """This function returns the angle we are targeting depending on which index corresponds to the farthest distance"""

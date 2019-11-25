@@ -38,6 +38,7 @@ float32[] intensities    # intensity data [device-specific units].  If your
 
 
 pub = rospy.Publisher('processed_data', LaserScan, queue_size=5)
+pub2 = rospy.Publisher('processed_data_behind_car', LaserScan, queue_size=5)
 
 
 """ Scans each pair of subsequent values, and returns an array of indices
@@ -50,7 +51,7 @@ def find_disparities(arr,threshold):
         to_return = []
         values = arr
         #print("Why would you consider disparities behind the car",len(values))
-        for i in range(180,901):
+        for i in range(400,901):
             if abs(values[i] - values[i + 1]) >= threshold:
                 #print("disparity: ",(values[i], values[i + 1]))
                 #print("indices: ",(i, i + 1))
@@ -118,7 +119,7 @@ def extend_disparities(arr,disparity_indices,car_width):
                     current_index += 1
                 else:
                     current_index -= 1
-        return ranges
+    return ranges
 
 """This function returns the angle we are targeting depending on which index corresponds to the farthest distance"""
 def calculate_angle(index):
@@ -142,13 +143,14 @@ def threshold_angle(angle):
 
 def lidar_callback(data):
     global pub
+    global pub2
     #copy the scan currently being published
     new_scan=copy.copy(data)
     ranges=data.ranges
     #convert the range to a numpy array so that we can process the data
     limited_ranges=np.asarray(ranges)
     #ignore everything outside the -90 to 90 degree range
-    limited_ranges[0:180]=0.0
+    limited_ranges[0:400]=0.0
     limited_ranges[901:]=0.0
     #add this so that the last element is not detected as a disparity
     limited_ranges[901]=limited_ranges[900]
@@ -177,6 +179,15 @@ def lidar_callback(data):
     print("Max Value:",max_value)
     print("Driving Distance Index:",driving_distance,"Computed Angle:",driving_angle,"Thresholded Angle:",thresholded_angle,"Distance at that angle:",new_ranges[driving_distance])
     pub.publish(new_scan)
+
+    behind_car=np.asarray(data.ranges)
+    behind_car[180:901]=0.0
+    #set the new computed ranges and publish it so you can see it in rviz
+    new_scan.ranges= behind_car
+    #reset the time stamp
+    new_scan.header.stamp=rospy.Time.now()
+    pub2.publish(new_scan)
+    
     
 
 
