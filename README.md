@@ -27,6 +27,7 @@ Our car is modeled after the V2 using a Hokuyo UST-10LX lidar and ZED Camera for
 
 **a_stars_pure_pursuit**: ROS package for a pure pursuit motion planner developped by sidsingh@seas.upenn.edu
 
+**Note that when installing the simulator, do not include the racecar-ws directory in your ROS workspace.** This code is meant to be deployed on the car and will cause name conflicts if included in the simulation package.
 
 
 # Algorithms
@@ -50,6 +51,9 @@ Assuming you have ROS and Gazebo installed run:
 ```bash
 $ sudo apt-get install ros-kinetic-ros-control ros-kinetic-ros-controllers ros-kinetic-gazebo-ros-control ros-kinetic-ackermann-msgs ros-kinetic-joy
 ```
+To install the naviagation packages run the following: 
+
+```sudo apt-get install ros-kinetic-teb-local-planner && sudo apt-get install apt-get install ros-kinetic-move-base && sudo apt-get install ros-kinetic-navigation```
  
 To launch the simulation run the following roslaunch command:
 ```roslaunch race f1tenth.launch```
@@ -99,6 +103,12 @@ Run the particle filter:
 
 Run pure pursuit
 ```roslaunch a_stars_pure_pursuit pure_pursuit_sim.launch  ```
+
+##### Collecting waypoints
+
+If you wish to collect waypoints so that you can run pure pursuit on a new track run the following ```rosrun a_stars_pure_pursuit waypoint_logger_pure_pursuit```
+
+This will run a rosnode that collects positional information of the car and store them in the waypoints directory of the **a_stars_pure_pursuit** package. Drive the car manually using the keyboard node in order to collect the points. Once you have collected a sufficient number of waypoints run ```roslaunch a_stars_pure_pursuit pure_pursuit_sim.launch```
 
 # Docker
 
