@@ -10,7 +10,7 @@ from gazebo_msgs.msg import ModelStates
 from gazebo_msgs.srv import GetModelState
 from std_msgs.msg import Header
 
-pub = rospy.Publisher("racecar_position_gazebo", PoseStamped, queue_size=1)
+pub = rospy.Publisher("racecar2_position_gazebo", PoseStamped, queue_size=1)
 
 racecar_pose = Pose()
 
@@ -28,11 +28,11 @@ def robot_pose_update(data):
     # Break out of this callback if racecar not properly initialized in Gazebo yet so that we don't see red error statements in Terminal about no index of "racecar" in names.
     if len(names) < 2:
         return
-    racecar_index = names.index("racecar")
+    racecar_index = names.index("racecar2")
     racecar_pose = data.pose[racecar_index]
 
 if __name__ == "__main__":
-    rospy.init_node("remap_gazebo_pose")
+    rospy.init_node("remap_gazebo_pose2")
     # Set the update rate
     rospy.Timer(rospy.Duration(.025), timer_callback) # 40hz
     # Set subscribers

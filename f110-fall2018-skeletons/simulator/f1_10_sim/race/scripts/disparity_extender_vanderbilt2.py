@@ -80,10 +80,10 @@ class DisparityExtenderDriving(object):
 
         #publisher for speed and angles 
 
-        self.pub_drive_param = rospy.Publisher('drive_parameters',drive_param, queue_size=5)
+        self.pub_drive_param = rospy.Publisher('drive_parameters2',drive_param, queue_size=5)
 
         #this functionality depends on a functioning LIDAR so it subscribes to the lidar scans
-        rospy.Subscriber('scan', LaserScan, self.lidar_callback)
+        rospy.Subscriber('scan2', LaserScan, self.lidar_callback)
 
         #create a variable that will store the lidar distances
         self.lidar_distances=None
@@ -220,7 +220,7 @@ class DisparityExtenderDriving(object):
     def publish_speed_and_angle(self,angle,speed):
         msg = drive_param()
         msg.angle = angle
-        msg.velocity = 1.0 #right now I want constant speed
+        msg.velocity = 1.0
         self.pub_drive_param.publish(msg)
 
 
@@ -327,7 +327,7 @@ class DisparityExtenderDriving(object):
 if __name__ == '__main__':
     rospy.init_node('disparity_extender', anonymous=True)
     extendObj=DisparityExtenderDriving()
-    #wait three seconds so that the simulation sets up properly
-    rospy.sleep(3)
-    rospy.Subscriber('scan', LaserScan, extendObj.lidar_callback)
+    #wait 5 seconds so that the simulation starts properly
+    rospy.sleep(5)
+    rospy.Subscriber('scan2', LaserScan, extendObj.lidar_callback)
     rospy.spin()

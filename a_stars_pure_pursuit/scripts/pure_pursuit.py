@@ -29,13 +29,12 @@ class pure_pursuit:
 	#Publisher for the goal point
 	self.goal_pub = rospy.Publisher('/waypoint/goal', Point, queue_size=1)
 
-        rospy.Subscriber('/pf/viz/inferred_pose_fake', PoseStamped, self.callback, queue_size=1)
+        rospy.Subscriber("racecar_position_gazebo", PoseStamped, self.callback, queue_size=1)
 
     # Import waypoints.csv into a list (path_points)
     def read_waypoints(self):
 
-        #dirname  = os.path.dirname(__file__)
-        #filename = os.path.join(dirname, '../waypoints/levine-waypoints.csv')
+
         #filename='/home/musaup/Documents/catkin_ws/src/f110-fall2018-skeletons/labs/wall_following/logs/pure-pursuit-wp-2019-04-07-22-39-51.csv'
         #filename='/home/musaup/Documents/catkin_ws/src/f110-fall2018-skeletons/labs/wall_following/logs/pure-pursuit-wp-2019-04-08-02-28-24.csv'
         #filename = os.path.join(dirname, '../waypoints/levine-waypoints.csv')
