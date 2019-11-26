@@ -92,7 +92,7 @@ Once you have run the above command. Navigate to rviz and set to navigation goal
 
 #### Strategy 2: Pure Pursuit and Particle Filter Localization
 Run the simulation:
-```roslaunch race f1tenth.launch```
+```roslaunch race f1_tenth.launch```
 
 This script simply launches the car in the racetrack, enables keyboard teleoperation, and launches the relevant sensors
 
