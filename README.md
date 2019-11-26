@@ -110,6 +110,22 @@ If you wish to collect waypoints so that you can run pure pursuit on a new track
 
 This will run a rosnode that collects positional information of the car and store them in the waypoints directory of the **a_stars_pure_pursuit** package. Drive the car manually using the keyboard node in order to collect the points. Once you have collected a sufficient number of waypoints run ```roslaunch a_stars_pure_pursuit pure_pursuit_sim.launch```
 
+
+# Multi-Car Experiments
+
+Multicar-experiments are now available via simulation. At the present time it is limited to only two cars. To launch the simulation simply run:
+
+``roslaunch race multi_car_general.launch``
+
+This will launch both cars in gazebo and drive them using a gap following algorithm. The gap finding algorithm can be found in the race package and is called ``disparity_extender_vanderbilt.py``. It was inspired by the following blog post by Nathan Otterness [blog](https://www.nathanotterness.com/2019/04/the-disparity-extender-algorithm-and.html).
+
+It will also launch a keyboard node that allows you to control the second car. If you wish to tele-operate the first car simply run ``rosrun race keyboard.py``
+
+The following gif displays a sample of the experiment: 
+
+![Two_Car_Sim](./images/two_car_sim.gif "Two Car Simulation")
+
+
 # Docker
 
 Install [NVIDIA-Docker](https://github.com/NVIDIA/nvidia-docker) to containerize and run GPU accelerated workloads. In order to run the simulation please install it. 
