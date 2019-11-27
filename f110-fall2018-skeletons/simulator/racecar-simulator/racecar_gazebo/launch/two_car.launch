@@ -25,7 +25,7 @@
   
   -->
   
-  <node name="racecar_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model racecar2 -x -1.35 -y 0.05 -z 0.05" />
+  <node name="racecar_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model racecar2 -x -1.75 -y 0.05 -z 0.05" />
   
   <!-- Transforms This will end up being easier-->
 

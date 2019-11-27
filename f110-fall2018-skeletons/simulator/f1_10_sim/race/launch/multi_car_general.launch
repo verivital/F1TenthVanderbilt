@@ -26,8 +26,10 @@
   <!--Launch the nodes for the disparity extender-->
   <node type="rviz" name="rviz" pkg="rviz" args="-d $(find race)/cfg/multicar.rviz"/>
 
-  <node pkg="race" name="disparity_extender" type="disparity_extender_vanderbilt.py" output="screen"/>
-  <node pkg="race" name="disparity_extender2" type="disparity_extender_vanderbilt2.py" output="screen"/>
+  <node pkg="race" name="disparity_extender" type="disparity_extender_vanderbilt.py" />
+  <!--<node pkg="race" name="disparity_extender2" type="disparity_extender_vanderbilt2.py"/>-->
+  <node pkg="race" name="disparity_extender2" type="follow_lead.py" output="screen"/>
+  
 
   <!-- Launch the nodes that know the positions of the car, We can generalize this later but right now these are outside nodes-->
   <node pkg='a_stars_pure_pursuit' name='racecar_1_position' type='remap_gazebo_pose.py'/>

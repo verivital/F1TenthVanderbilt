@@ -16,7 +16,7 @@ class pure_pursuit:
 
     def __init__(self):
 
-        self.LOOKAHEAD_DISTANCE = 1.20#1.70 # meters
+        self.LOOKAHEAD_DISTANCE = 0.70#1.70 # meters
         self.VELOCITY = 3.2 # m/s
         self.goal = 0
         self.read_waypoints()
@@ -123,9 +123,9 @@ class pure_pursuit:
 
         angle = angle_i*2
         angle = np.clip(angle, -0.4189, 0.4189) # 0.4189 radians = 24 degrees because car can only turn 24 degrees max
-
-        self.set_speed(angle)
-        #self.const_speed(angle)
+        print(angle)
+        #self.set_speed(angle)
+        self.const_speed(angle)
 
 	#publish the goal in the vehicle coordinates. 
 	goalPoint = Point(float(goal_x_veh_coord),float(goal_y_veh_coord),float(angle))
@@ -162,9 +162,9 @@ class pure_pursuit:
 
     # USE THIS FUNCTION IF CONSTANT SPEED IS NEEDED
     def const_speed(self,angle):
-        self.LOOKAHEAD_DISTANCE = 2
+        #self.LOOKAHEAD_DISTANCE = 2
         self.msg.angle = angle
-        self.msg.velocity = self.VELOCITY
+        self.msg.velocity = 1.5#self.VELOCITY
 
     # find the angle bewtween two vectors    
     def find_angle(self, v1, v2):
