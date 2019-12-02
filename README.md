@@ -106,7 +106,7 @@ Run pure pursuit
 
 ##### Collecting waypoints
 
-If you wish to collect waypoints so that you can run pure pursuit on a new track run the following ```rosrun a_stars_pure_pursuit waypoint_logger_pure_pursuit```
+If you wish to collect waypoints so that you can run pure pursuit on a new track run the following ```rosrun a_stars_pure_pursuit waypoint_logger_pure_pursuit.py```
 
 This will run a rosnode that collects positional information of the car and store them in the waypoints directory of the **a_stars_pure_pursuit** package. Drive the car manually using the keyboard node in order to collect the points. Once you have collected a sufficient number of waypoints run ```roslaunch a_stars_pure_pursuit pure_pursuit_sim.launch```
 
