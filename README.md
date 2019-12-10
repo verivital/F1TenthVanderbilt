@@ -53,7 +53,9 @@ $ sudo apt-get install ros-kinetic-ros-control ros-kinetic-ros-controllers ros-k
 ```
 To install the naviagation packages run the following: 
 
-```sudo apt-get install ros-kinetic-teb-local-planner && sudo apt-get install apt-get install ros-kinetic-move-base && sudo apt-get install ros-kinetic-navigation```
+```bash 
+$ sudo apt-get install ros-kinetic-teb-local-planner ros-kinetic-move-base ros-kinetic-navigation
+```
  
 To launch the simulation run the following roslaunch command:
 ```roslaunch race f1tenth.launch```
